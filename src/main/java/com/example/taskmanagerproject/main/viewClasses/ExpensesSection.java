@@ -21,8 +21,6 @@ public class ExpensesSection {
         test.getStyleClass().add("good-font-text");
         test.setStyle("-fx-font-family: 'Pacifico';");
 
-        System.out.println("zmiana");
-
         boxForExpensesSection.getChildren().add(test);
     }
 
