@@ -1,0 +1,152 @@
+/* styles.css */
+.modern-container {
+    -fx-background-color: #303030; /* Dark background color */
+}
+
+.container-for-displaying-things {
+
+    -fx-background-color: #474747; /* Dark background color */
+}
+
+.button {
+    -fx-background-color: #92D2FE;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 5px;
+}
+.clicked-button {
+    -fx-background-color: #52B8FF;
+}
+.unclicked-button {
+    -fx-background-color: #92D2FE;
+}
+.today-button {
+    -fx-background-color: #74BAFC;
+}
+.grey-button {
+    -fx-background-color: lightgrey
+}
+@font-face {
+    -fx-font-family: 'Pacifico';
+    src: url('file:/C:/Users/wwerc/IdeaProjects/TaskManagerProject/src/main/resources/com/example/taskmanagerproject/main/Pacifico-Regular.ttf');
+}
+
+.good-font-text {
+    -fx-font-family: Pacifico;
+    -fx-text-fill: white;
+    -fx-font-size: 45px;
+}
+.event-text {
+    -fx-font-family: Pacifico;
+    -fx-text-fill: lightgrey;
+    -fx-font-size: 28px;
+}
+.events {
+    -fx-font-family: Pacifico;
+    -fx-text-fill: lightgrey;
+    -fx-font-size: 20px;
+}
+.days-of-week {
+    -fx-font-family: Pacifico;
+    -fx-text-fill: lightgrey;
+    -fx-font-size: 15px;
+}
+.calendar {
+    -fx-text-fill: lightblue;
+    -fx-font-size: 20px;
+}
+.add-new-event-button {
+    -fx-background-color: lightblue;
+    -fx-text-fill: black;
+    -fx-font-size: 10px;
+    -fx-padding: 8px 15px;
+    -fx-background-radius: 5px;
+}
+
+
+.today-button-with-event {
+    /* -fx-background-color: linear-gradient(to right, #92D2FE 80%, #65BFFB 20%); */
+    /*-fx-background-color: linear-gradient(to bottom, #19A1FB 10%, #65BFFB 80%); */
+    -fx-background-color: linear-gradient(to bottom, #19A1FB 20%, #71C6FE 80%);
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 5px;
+}
+
+.button-with-event {
+    /* -fx-background-color: linear-gradient(to right, #92D2FE 80%, #65BFFB 20%); */
+    -fx-background-color: linear-gradient(to bottom, #65BFFB 10%, #92D2FE 80%);
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 5px;
+}
+.today-button-without-event {
+    /* -fx-background-color: linear-gradient(to right, #92D2FE 80%, #65BFFB 20%); */
+    -fx-background-color: #62BFFF;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 5px;
+}
+.button-without-event {
+    /* -fx-background-color: linear-gradient(to right, #92D2FE 80%, #65BFFB 20%); */
+    -fx-background-color: #92D2FE;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 5px;
+}
+.task_button {
+    -fx-background-color: #e2efef;
+}
+.task_button_done {
+    -fx-background-color: grey
+}
+
+.manage_tasks_button {
+    -fx-background-color: lightblue;
+    -fx-text-fill: black;
+    -fx-font-size: 10px;
+
+    -fx-background-radius: 5px;
+}
+
+
+.button-with-image {
+    -fx-background-color: #d3d3d3; /* Grey background color */
+    -fx-background-insets: 0;
+}
+
+.important-buttons-not-clicked {
+    -fx-background-color: white;
+}
+.important-buttons-clicked {
+    -fx-background-color: lightgrey;
+}
+
+
+
+.not-important {
+    -fx-text-fill: #717171;
+    -fx-font-family: Pacifico;
+    -fx-font-size: 20px;
+}
+
+.kind-of-important {
+    -fx-font-family: Pacifico;
+     -fx-text-fill: #A9A9A9;
+    -fx-font-size: 20px;
+}
+.important {
+    -fx-font-family: Pacifico;
+    -fx-text-fill: #D2D2D2;
+    -fx-font-size: 20px;
+}
+.very-important {
+-fx-font-family: Pacifico;
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+}

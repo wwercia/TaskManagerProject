@@ -1,0 +1,12 @@
+/* styles.css */
+.modern-container {
+    -fx-background-color: #303030; /* Dark background color */
+}
+
+.modern-button {
+    -fx-background-color: #2196F3; /* Material Design Blue */
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 20px;
+        -fx-background-radius: 0px;
+}
