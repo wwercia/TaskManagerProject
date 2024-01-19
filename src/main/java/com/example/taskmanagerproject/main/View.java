@@ -7,7 +7,9 @@ import com.example.taskmanagerproject.main.viewClasses.TasksSection;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Box;
 import javafx.scene.text.Font;
 
 import java.net.MalformedURLException;
@@ -24,7 +26,7 @@ public class View {
 
 
     private Button previousClickedButton = null;
-    private VBox currentlyDisplayingSection = null;
+    private Pane currentlyDisplayingSection = null;
     public HBox initView() throws MalformedURLException {
 
         CalendarSection calendarSection = new CalendarSection();
@@ -42,7 +44,7 @@ public class View {
 
         BooksSection booksSection = new BooksSection();
         booksSection.initExpensesSection();
-        VBox boxForBooksSection = booksSection.getBoxForBooksSection();
+        HBox boxForBooksSection = booksSection.getBoxForBooksSection();
 
         Font.loadFont(getClass().getResourceAsStream("Pacifico-Regular.ttf"), 10);
 

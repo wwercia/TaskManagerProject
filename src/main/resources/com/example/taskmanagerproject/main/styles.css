@@ -150,3 +150,28 @@
     -fx-text-fill: white;
     -fx-font-size: 20px;
 }
+
+
+
+.book_section_main_words {
+    -fx-font-family: Pacifico;
+    -fx-text-fill: white;
+    -fx-font-size: 28px;
+}
+
+.book_section_manage_buttons {
+    -fx-background-color: lightblue;
+    -fx-text-fill: black;
+    -fx-font-size: 10px;
+    -fx-background-radius: 5px;
+}
+
+.book_section_books {
+    -fx-font-family: Pacifico;
+    -fx-text-fill: lightgrey;
+    -fx-font-size: 17px;
+}
+
+.book_section_button {
+    -fx-background-color: lightgrey;
+}
