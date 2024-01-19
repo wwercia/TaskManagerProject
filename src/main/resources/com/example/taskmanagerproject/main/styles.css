@@ -175,3 +175,9 @@
 .book_section_button {
     -fx-background-color: lightgrey;
 }
+
+.book_section_enter_opinion {
+    -fx-font-family: Pacifico;
+    -fx-text-fill: lightgrey;
+    -fx-font-size: 21px;
+}

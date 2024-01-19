@@ -147,17 +147,34 @@ public class BooksSection {
 
         HBox boxForWords = new HBox(80);
         boxForWords.setAlignment(Pos.CENTER);
-        Label enterOpinionWord = new Label("Enter your opinion of " + book.getName());
-        boxForWords.getChildren().add(enterOpinionWord);
 
-        addStyle(enterOpinionWord);
+        VBox box = new VBox();
+        box.setAlignment(Pos.CENTER);
+
+        Label enterOpinionWord = new Label("Enter your opinion of");
+        Label nameOfBook = new Label(book.getName());
+
+        box.getChildren().addAll(enterOpinionWord, nameOfBook);
+        boxForWords.getChildren().addAll(box);
+
+        enterOpinionWord.getStyleClass().add("book_section_enter_opinion");
+        nameOfBook.getStyleClass().add("book_section_enter_opinion");
 
         HBox boxForTextFields = new HBox(5);
         boxForTextFields.setAlignment(Pos.CENTER);
+
+        HBox boxForOpinion = new HBox(8);
+        boxForOpinion.setAlignment(Pos.CENTER);
+
         TextField opinion = new TextField();
         opinion.setPrefHeight(50);
         opinion.setPrefWidth(60);
-        boxForTextFields.getChildren().add(opinion);
+
+        Label label = new Label("/5");
+        addStyle(label);
+
+        boxForOpinion.getChildren().addAll(opinion, label);
+        boxForTextFields.getChildren().add(boxForOpinion);
 
         VBox boxForButton = new VBox();
         boxForButton.setAlignment(Pos.CENTER);
@@ -179,7 +196,7 @@ public class BooksSection {
 
         boxForBoxes.getChildren().addAll(boxForWords, boxForTextFields, boxForButton);
 
-        Scene optionsScene = new Scene(boxForBoxes, 260, 175);
+        Scene optionsScene = new Scene(boxForBoxes, 260, 215);
 
         optionsScene.getStylesheets().add(App.class.getResource("styles.css").toExternalForm());
 
