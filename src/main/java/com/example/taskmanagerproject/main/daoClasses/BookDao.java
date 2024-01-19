@@ -94,4 +94,16 @@ public class BookDao {
         }
     }
 
+    public boolean updateOpinion(Book book){
+        final String sql = String.format("UPDATE `months`.`books` SET `opinion` = '%s' WHERE (`id` = '%d');",
+                book.getOpinion(),
+                book.getId());
+        try (Statement statement = connection.createStatement()) {
+            int updatedRows = statement.executeUpdate(sql);
+            return updatedRows != 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
