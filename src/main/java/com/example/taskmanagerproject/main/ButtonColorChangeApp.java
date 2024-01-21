@@ -7,6 +7,10 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 public class ButtonColorChangeApp extends Application {
 
     private Button previousClickedButton = null;
@@ -55,6 +59,10 @@ public class ButtonColorChangeApp extends Application {
     }
 
     public static void main(String[] args) {
-        launch(args);
+        //launch(args);
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat month_date = new SimpleDateFormat("MMMM", Locale.ENGLISH);
+        String month_name = month_date.format(cal.getTime());
+        System.out.println(month_name);
     }
 }

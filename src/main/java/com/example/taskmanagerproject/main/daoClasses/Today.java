@@ -11,6 +11,7 @@ public class Today {
 
     public Today(Integer id, Integer day) {
         this(day);
+        this.id = id;
     }
 
     public Integer getId() {

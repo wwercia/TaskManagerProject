@@ -19,6 +19,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class CalendarSection {
@@ -42,7 +43,7 @@ public class CalendarSection {
     private final ScrollPane boxForEventDescriptionn = new ScrollPane(boxForEventDescription);
     private final Label eventsText = new Label("Events:");
 
-    private String currentMonth = "January";
+    private String currentMonth;
     private final DayDao dayDao = new DayDao();
     private final EventDao eventDao = new EventDao();
 
@@ -51,7 +52,11 @@ public class CalendarSection {
     public void initCalendarSection() {
         Font.loadFont(getClass().getResourceAsStream("Pacifico-Regular.ttf"), 10);
 
-        monthName.setText("January");
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat month_date = new SimpleDateFormat("MMMM", Locale.ENGLISH);
+        currentMonth = month_date.format(cal.getTime());
+
+        monthName.setText(currentMonth);
         monthName.getStyleClass().add("good-font-text");
         monthName.setStyle("-fx-font-family: 'Pacifico';");
 

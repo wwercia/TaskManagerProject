@@ -18,6 +18,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class TasksSection {
@@ -29,7 +30,6 @@ public class TasksSection {
     private final VBox boxOnlyForReturning = new VBox(25);
     private final HBox mainBox = new HBox(120);
     private final VBox boxForButtons = new VBox(10);
-
     private final Button deleteTaskButton = new Button("delete task");
     private final Button addTaskButton = new Button("add task");
     private final Button markTaskButton = new Button("mark task");
@@ -45,17 +45,23 @@ public class TasksSection {
     private final ArrayList<HBox> hBoxes = new ArrayList<>();
     private final TaskDao taskDao = new TaskDao();
     private final TodayDao todayDao = new TodayDao();
+    private String currentMonth;
 
     public void initTasksSection() {
         Font.loadFont(getClass().getResourceAsStream("Pacifico-Regular.ttf"), 10);
+
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat month_date = new SimpleDateFormat("MMMM", Locale.ENGLISH);
+        currentMonth = month_date.format(cal.getTime());
 
         toDoWord.setText("To do:");
         toDoWord.getStyleClass().add("good-font-text");
         toDoWord.setStyle("-fx-font-family: 'Pacifico';");
 
         Calendar calendar = Calendar.getInstance();
+        int daynumber = calendar.get(Calendar.DAY_OF_MONTH);
 
-        if (calendar.get(Calendar.DAY_OF_MONTH) != todayDao.getLastDay().getDay()) {
+        if (daynumber != todayDao.getLastDay().getDay()) {
             for (Task task : taskDao.getEverything()) {
                 task.setDone(false);
                 taskDao.updateIsDoneField(task);
@@ -256,10 +262,10 @@ public class TasksSection {
 
         VBox boxForButton = new VBox();
         boxForButton.setAlignment(Pos.CENTER);
-        Button addEventButton = new Button("delete task");
-        addEventButton.getStyleClass().add("grey-button");
+        Button deleteTaskButton = new Button("delete task");
+        deleteTaskButton.getStyleClass().add("grey-button");
 
-        addEventButton.setOnAction(new EventHandler<ActionEvent>() {
+        deleteTaskButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 String taskk = taskField.getText();
@@ -307,7 +313,7 @@ public class TasksSection {
 
         System.out.println("this has to be displayed");
 
-        boxForButton.getChildren().add(addEventButton);
+        boxForButton.getChildren().add(deleteTaskButton);
 
         boxForBoxes.getChildren().addAll(boxForWords, boxForTextFields, boxForButton);
 

@@ -17,9 +17,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class BooksSection {
 
@@ -42,6 +40,8 @@ public class BooksSection {
 
 
     private HashMap<Label, HBox> readBooks = new HashMap<>();
+    private HashMap<Button, Label> booksToReadMap = new HashMap<>();
+    private HashMap<Book, HashMap<Label, HBox>> readBooksMap = new HashMap<>();
 
     private final ArrayList<Book> booksRead = new ArrayList<>();
     private final ArrayList<Book> booksToRead = new ArrayList<>();
@@ -75,6 +75,7 @@ public class BooksSection {
             boxforBook.getChildren().addAll(labelForBookName, labelForBookOpinion);
             boxForReadBooks.getChildren().add(boxforBook);
             readBooks.put(labelForBookName, boxforBook);
+            readBooksMap.put(book, readBooks);
         }
 
         for (Book book : booksToRead) {
@@ -88,19 +89,16 @@ public class BooksSection {
             HBox boxforBook = new HBox(5);
             boxforBook.setAlignment(Pos.CENTER_LEFT);
             boxforBook.getChildren().addAll(button, labelForBookName);
+
             button.setOnAction(event -> {
                 //przenosi książke do przeczytanych książek
-
                 String opinion = displayWindowToGetOpinion(book);
-                if(opinion == null || opinion.length() == 0){
-                    return;
-                }
+                if (opinion == null || opinion.length() == 0) { return; }
                 book.setOpinion(opinion);
                 bookDao.updateOpinion(book);
                 book.setRead(true);
                 bookDao.updateIsReadField(book);
-
-                boxforBook.getChildren().removeAll(button,labelForBookName);
+                boxforBook.getChildren().removeAll(button, labelForBookName);
                 Label labelForBookNamee = new Label(book.getName());
                 Label labelForBookOpinionn = new Label(book.getOpinion() + "/5");
                 addStyle(labelForBookNamee);
@@ -109,11 +107,15 @@ public class BooksSection {
                 boxforBookk.getChildren().addAll(labelForBookNamee, labelForBookOpinionn);
                 boxForReadBooks.getChildren().add(boxforBookk);
                 readBooks.put(labelForBookNamee, boxforBookk);
-
             });
             boxForBooksToRead.getChildren().add(boxforBook);
+            //readBooksMap.put(book, readBooks);
+            booksToReadMap.put(button, labelForBookName);
         }
 
+        addBookButton.setOnAction(event -> addBook());
+        deleteBookButton.setOnAction(event -> deleteBook());
+        editBookButton.setOnAction(event -> editBook());
 
         boxForButtons.setAlignment(Pos.BASELINE_RIGHT);
 
@@ -133,7 +135,8 @@ public class BooksSection {
     }
 
     private String opinionnn;
-    private String displayWindowToGetOpinion(Book book){
+
+    private String displayWindowToGetOpinion(Book book) {
 
         opinionnn = null;
 
@@ -203,6 +206,187 @@ public class BooksSection {
         optionsStage.setScene(optionsScene);
         optionsStage.showAndWait();
         return opinionnn;
+
+    }
+
+    private Book bookToAdd;
+    private void addBook() {
+        Stage optionsStage = new Stage();
+        optionsStage.initModality(Modality.APPLICATION_MODAL);
+        optionsStage.setTitle("Adding book");
+
+        VBox boxForBoxes = new VBox(15);
+
+        boxForBoxes.getStyleClass().add("modern-container");
+
+        HBox boxForWords = new HBox(80);
+        boxForWords.setAlignment(Pos.CENTER);
+        Label taskWord = new Label("enter book name");
+        boxForWords.getChildren().add(taskWord);
+
+        taskWord.getStyleClass().add("book_section_enter_opinion");
+        taskWord.setStyle("-fx-font-family: 'Pacifico';");
+
+        HBox boxForTextFields = new HBox(5);
+        boxForTextFields.setAlignment(Pos.CENTER);
+        TextField fieldWithBookName = new TextField();
+        fieldWithBookName.setPrefHeight(100);
+        fieldWithBookName.setPrefWidth(300);
+        boxForTextFields.getChildren().add(fieldWithBookName);
+
+        VBox boxForButton = new VBox();
+        boxForButton.setAlignment(Pos.CENTER);
+        Button addBookButton = new Button("confirm");
+        addBookButton.getStyleClass().add("grey-button");
+
+        addBookButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                String bookName = fieldWithBookName.getText();
+                if (bookName == null || bookName.isEmpty()) {
+                    optionsStage.close();
+                    return;
+                }
+                bookToAdd = new Book(bookName, false, null);
+                bookDao.addBook(bookToAdd);
+                booksToRead.add(bookToAdd);
+
+                Button button = new Button();
+                button.getStyleClass().add("book_section_button");
+                button.setMinSize(15, 15);
+                button.setMaxSize(15, 15);
+                button.setPrefSize(15, 15);
+                Label labelForBookName = new Label(bookToAdd.getName());
+                addStyle(labelForBookName);
+                HBox boxforBook = new HBox(5);
+                boxforBook.setAlignment(Pos.CENTER_LEFT);
+                boxforBook.getChildren().addAll(button, labelForBookName);
+                button.setOnAction(event -> {
+                    //przenosi książke do przeczytanych książek
+
+                    String opinion = displayWindowToGetOpinion(bookToAdd);
+                    if (opinion == null || opinion.length() == 0) {
+                        return;
+                    }
+                    bookToAdd.setOpinion(opinion);
+                    bookDao.updateOpinion(bookToAdd);
+                    bookToAdd.setRead(true);
+                    bookDao.updateIsReadField(bookToAdd);
+
+                    boxforBook.getChildren().removeAll(button, labelForBookName);
+                    Label labelForBookNamee = new Label(bookToAdd.getName());
+                    Label labelForBookOpinionn = new Label(bookToAdd.getOpinion() + "/5");
+                    addStyle(labelForBookNamee);
+                    addStyle(labelForBookOpinionn);
+                    HBox boxforBookk = new HBox(20);
+                    boxforBookk.getChildren().addAll(labelForBookNamee, labelForBookOpinionn);
+                    boxForReadBooks.getChildren().add(boxforBookk);
+                    readBooks.put(labelForBookNamee, boxforBookk);
+                });
+                boxForBooksToRead.getChildren().add(boxforBook);
+                booksToReadMap.put(button, labelForBookName);
+                optionsStage.close();
+            }
+        });
+        boxForButton.getChildren().add(addBookButton);
+        boxForBoxes.getChildren().addAll(boxForWords, boxForTextFields, boxForButton);
+        Scene optionsScene = new Scene(boxForBoxes, 370, 230);
+        optionsScene.getStylesheets().add(App.class.getResource("styles.css").toExternalForm());
+        optionsStage.setScene(optionsScene);
+        optionsStage.showAndWait();
+    }
+
+    private void deleteBook() {
+        Stage optionsStage = new Stage();
+        optionsStage.initModality(Modality.APPLICATION_MODAL);
+        optionsStage.setTitle("Deleting book");
+        VBox boxForBoxes = new VBox(15);
+        boxForBoxes.getStyleClass().add("modern-container");
+        HBox boxForWords = new HBox(80);
+        boxForWords.setAlignment(Pos.CENTER);
+        Label enterBookName = new Label("Enter book name");
+        boxForWords.getChildren().add(enterBookName);
+        enterBookName.getStyleClass().add("book_section_enter_opinion");
+        enterBookName.setStyle("-fx-font-family: 'Pacifico';");
+
+        HBox boxForTextFields = new HBox(5);
+        boxForTextFields.setAlignment(Pos.CENTER);
+        TextField fieldWithBookName = new TextField();
+        fieldWithBookName.setPrefHeight(50);
+        fieldWithBookName.setPrefWidth(60);
+        boxForTextFields.getChildren().add(fieldWithBookName);
+
+        VBox boxForButton = new VBox();
+        boxForButton.setAlignment(Pos.CENTER);
+        Button confirmButton = new Button("confirm");
+        confirmButton.getStyleClass().add("grey-button");
+
+        confirmButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                String bookName = fieldWithBookName.getText();
+                if (bookName == null || bookName.isEmpty()) {
+                    optionsStage.close();
+                    return;
+                }
+                Book bookToDelete = null;
+                for(Book book : booksToRead){
+                    if(book.getName().equals(bookName.trim())){
+                        bookToDelete = book;
+                    }
+                }
+                if(bookToDelete == null){
+                    for(Book book : booksRead){
+                        if(book.getName().equals(bookName.trim())){
+                            bookToDelete = book;
+                        }
+                    }
+                }
+                if(bookToDelete == null){
+                    optionsStage.close();
+                    return;
+                }
+
+                bookDao.deleteBook(bookToDelete);
+                booksToRead.remove(bookToDelete);
+                booksRead.remove(bookToDelete);
+
+                // usuwa z ekranu jesli książka jest w przeczytanych książkach
+                HBox boxToDelete = null;
+                HashMap<Label, HBox> map = readBooks;
+                for(Map.Entry<Label, HBox> entry : map.entrySet()){
+                    if(entry.getKey().getText().equals(bookToDelete.getName())){
+                        boxToDelete = entry.getValue();
+                    }
+                }
+                boolean isDone = boxForReadBooks.getChildren().remove(boxToDelete);
+                if(isDone){
+                    optionsStage.close();
+                    return;
+                }
+
+                // usuwa z ekranu jesli książka jest w nieprzeczytanych książkach
+                HBox boxToDeletee = null;
+                HashMap<Button, Label> mapp = booksToReadMap;
+                for(Map.Entry<Button, Label> entry : mapp.entrySet()){
+                    if(entry.getValue().getText().equals(bookToDelete.getName())){
+                        boxToDeletee = new HBox(entry.getKey(), entry.getValue());
+                    }
+                }
+                boxForBooksToRead.getChildren().remove(boxToDeletee);
+                optionsStage.close();
+            }
+        });
+        System.out.println("this has to be displayed");
+        boxForButton.getChildren().add(confirmButton);
+        boxForBoxes.getChildren().addAll(boxForWords, boxForTextFields, boxForButton);
+        Scene optionsScene = new Scene(boxForBoxes, 300, 200);
+        optionsScene.getStylesheets().add(App.class.getResource("styles.css").toExternalForm());
+        optionsStage.setScene(optionsScene);
+        optionsStage.showAndWait();
+    }
+
+    private void editBook() {
 
     }
 
