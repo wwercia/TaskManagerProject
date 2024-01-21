@@ -167,9 +167,8 @@
 }
 
 .book_section_books {
-    -fx-font-family: Pacifico;
     -fx-text-fill: lightgrey;
-    -fx-font-size: 17px;
+    -fx-font-size: 13px;
 }
 
 .book_section_button {

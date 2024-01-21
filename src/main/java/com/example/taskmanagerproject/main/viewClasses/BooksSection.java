@@ -25,7 +25,9 @@ public class BooksSection {
         return boxForBooksSection;
     }
 
-    private final HBox boxForBooksSection = new HBox(47);
+    private final HBox boxForBooksSection = new HBox(20);
+
+    private final VBox boxForBooksss = new VBox();
 
     private final VBox booksForReadBooksPanes = new VBox();
     private final Label wordBooksRead = new Label("Books read");
@@ -60,13 +62,14 @@ public class BooksSection {
 
         scrollPaneForReadBooks.getStyleClass().add("container-for-displaying-things");
         boxForReadBooks.getStyleClass().add("container-for-displaying-things");
-        boxForReadBooks.setPrefSize(110, 500);
+        boxForReadBooks.setPrefSize(370, 250);
         scrollPaneForReadBooks.setFitToWidth(true);
         scrollPaneForReadBooks.setFitToHeight(true);
-        scrollPaneForReadBooks.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-        scrollPaneForReadBooks.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        //scrollPaneForReadBooks.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        //scrollPaneForReadBooks.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         scrollPaneForBooksToRead.getStyleClass().add("container-for-displaying-things");
         boxForBooksToRead.getStyleClass().add("container-for-displaying-things");
+        boxForBooksToRead.setPrefSize(370, 250);
         scrollPaneForBooksToRead.setFitToWidth(true);
         scrollPaneForBooksToRead.setFitToHeight(true);
 
@@ -85,7 +88,7 @@ public class BooksSection {
             Label labelForBookOpinion = new Label(book.getOpinion() + "/5");
             addStyle(labelForBookName);
             addStyle(labelForBookOpinion);
-            HBox boxforBook = new HBox(20);
+            HBox boxforBook = new HBox(8);
             boxforBook.getChildren().addAll(labelForBookName, labelForBookOpinion);
             boxForReadBooks.getChildren().add(0, boxforBook);
             readBooks.put(labelForBookName, boxforBook);
@@ -142,12 +145,16 @@ public class BooksSection {
         //boxForBooksToReadPanes.getChildren().addAll(wordBooksToRead, boxForBooksToRead);
         boxForBooksToReadPanes.getChildren().addAll(wordBooksToRead, scrollPaneForBooksToRead);
         boxForButtons.getChildren().addAll(addBookButton, deleteBookButton, editBookButton);
-        boxForBooksSection.getChildren().addAll(booksForReadBooksPanes, boxForBooksToReadPanes, boxForButtons);
+
+        boxForBooksss.getChildren().addAll(booksForReadBooksPanes, boxForBooksToReadPanes);
+
+       // boxForBooksSection.getChildren().addAll(booksForReadBooksPanes, boxForBooksToReadPanes, boxForButtons);
+        boxForBooksSection.getChildren().addAll(boxForBooksss, boxForButtons);
     }
 
     private void addStyle(Label label) {
         label.getStyleClass().add("book_section_books");
-        label.setStyle("-fx-font-family: 'Pacifico';");
+        //label.setStyle("-fx-font-family: 'Pacifico';");
     }
 
     private String opinionnn;
