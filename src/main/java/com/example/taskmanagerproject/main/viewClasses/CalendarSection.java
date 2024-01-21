@@ -61,7 +61,7 @@ public class CalendarSection {
         monthName.setStyle("-fx-font-family: 'Pacifico';");
 
         boxForEventDescriptionn.getStyleClass().add("container-for-displaying-things");
-        boxForEventDescription .getStyleClass().add("container-for-displaying-things");
+        boxForEventDescription.getStyleClass().add("container-for-displaying-things");
         boxForEventDescriptionn.setFitToWidth(true);
         boxForEventDescriptionn.setFitToHeight(true);
 

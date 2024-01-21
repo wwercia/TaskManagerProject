@@ -3,13 +3,13 @@ package com.example.taskmanagerproject.main.viewClasses;
 import com.example.taskmanagerproject.main.App;
 import com.example.taskmanagerproject.main.daoClasses.Book;
 import com.example.taskmanagerproject.main.daoClasses.BookDao;
-import com.example.taskmanagerproject.main.daoClasses.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -30,9 +30,11 @@ public class BooksSection {
     private final VBox booksForReadBooksPanes = new VBox();
     private final Label wordBooksRead = new Label("Books read");
     private final VBox boxForReadBooks = new VBox();
+    private final ScrollPane scrollPaneForReadBooks = new ScrollPane(boxForReadBooks);
     private final VBox boxForBooksToReadPanes = new VBox();
     private final Label wordBooksToRead = new Label("Books to read");
     private final VBox boxForBooksToRead = new VBox();
+    private final ScrollPane scrollPaneForBooksToRead = new ScrollPane(boxForBooksToRead);
     private final VBox boxForButtons = new VBox(10);
     private final Button addBookButton = new Button("add book");
     private final Button deleteBookButton = new Button("delete book");
@@ -56,6 +58,18 @@ public class BooksSection {
         wordBooksToRead.getStyleClass().add("book_section_main_words");
         wordBooksToRead.setStyle("-fx-font-family: 'Pacifico';");
 
+        scrollPaneForReadBooks.getStyleClass().add("container-for-displaying-things");
+        boxForReadBooks.getStyleClass().add("container-for-displaying-things");
+        boxForReadBooks.setPrefSize(110, 500);
+        scrollPaneForReadBooks.setFitToWidth(true);
+        scrollPaneForReadBooks.setFitToHeight(true);
+        scrollPaneForReadBooks.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        scrollPaneForReadBooks.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        scrollPaneForBooksToRead.getStyleClass().add("container-for-displaying-things");
+        boxForBooksToRead.getStyleClass().add("container-for-displaying-things");
+        scrollPaneForBooksToRead.setFitToWidth(true);
+        scrollPaneForBooksToRead.setFitToHeight(true);
+
         ArrayList<Book> allBooks = bookDao.getAllBooks();
 
         for (Book book : allBooks) {
@@ -73,7 +87,7 @@ public class BooksSection {
             addStyle(labelForBookOpinion);
             HBox boxforBook = new HBox(20);
             boxforBook.getChildren().addAll(labelForBookName, labelForBookOpinion);
-            boxForReadBooks.getChildren().add(boxforBook);
+            boxForReadBooks.getChildren().add(0, boxforBook);
             readBooks.put(labelForBookName, boxforBook);
             readBooksMap.put(book, readBooks);
         }
@@ -103,12 +117,12 @@ public class BooksSection {
                 Label labelForBookOpinionn = new Label(book.getOpinion() + "/5");
                 addStyle(labelForBookNamee);
                 addStyle(labelForBookOpinionn);
-                HBox boxforBookk = new HBox(20);
+                HBox boxforBookk = new HBox(8);
                 boxforBookk.getChildren().addAll(labelForBookNamee, labelForBookOpinionn);
                 boxForReadBooks.getChildren().add(boxforBookk);
                 readBooks.put(labelForBookNamee, boxforBookk);
             });
-            boxForBooksToRead.getChildren().add(boxforBook);
+            boxForBooksToRead.getChildren().add(0, boxforBook);
             //readBooksMap.put(book, readBooks);
             booksToReadMap.put(button, labelForBookName);
         }
@@ -123,8 +137,10 @@ public class BooksSection {
         deleteBookButton.getStyleClass().add("book_section_manage_buttons");
         editBookButton.getStyleClass().add("book_section_manage_buttons");
 
-        booksForReadBooksPanes.getChildren().addAll(wordBooksRead, boxForReadBooks);
-        boxForBooksToReadPanes.getChildren().addAll(wordBooksToRead, boxForBooksToRead);
+        //booksForReadBooksPanes.getChildren().addAll(wordBooksRead, boxForReadBooks);
+        booksForReadBooksPanes.getChildren().addAll(wordBooksRead, scrollPaneForReadBooks);
+        //boxForBooksToReadPanes.getChildren().addAll(wordBooksToRead, boxForBooksToRead);
+        boxForBooksToReadPanes.getChildren().addAll(wordBooksToRead, scrollPaneForBooksToRead);
         boxForButtons.getChildren().addAll(addBookButton, deleteBookButton, editBookButton);
         boxForBooksSection.getChildren().addAll(booksForReadBooksPanes, boxForBooksToReadPanes, boxForButtons);
     }
@@ -221,7 +237,7 @@ public class BooksSection {
 
         HBox boxForWords = new HBox(80);
         boxForWords.setAlignment(Pos.CENTER);
-        Label taskWord = new Label("enter book name");
+        Label taskWord = new Label("Enter book name");
         boxForWords.getChildren().add(taskWord);
 
         taskWord.getStyleClass().add("book_section_enter_opinion");
@@ -278,12 +294,12 @@ public class BooksSection {
                     Label labelForBookOpinionn = new Label(bookToAdd.getOpinion() + "/5");
                     addStyle(labelForBookNamee);
                     addStyle(labelForBookOpinionn);
-                    HBox boxforBookk = new HBox(20);
+                    HBox boxforBookk = new HBox(8);
                     boxforBookk.getChildren().addAll(labelForBookNamee, labelForBookOpinionn);
-                    boxForReadBooks.getChildren().add(boxforBookk);
+                    boxForReadBooks.getChildren().add(0, boxforBookk);
                     readBooks.put(labelForBookNamee, boxforBookk);
                 });
-                boxForBooksToRead.getChildren().add(boxforBook);
+                boxForBooksToRead.getChildren().add(0, boxforBook);
                 booksToReadMap.put(button, labelForBookName);
                 optionsStage.close();
             }
@@ -312,8 +328,8 @@ public class BooksSection {
         HBox boxForTextFields = new HBox(5);
         boxForTextFields.setAlignment(Pos.CENTER);
         TextField fieldWithBookName = new TextField();
-        fieldWithBookName.setPrefHeight(50);
-        fieldWithBookName.setPrefWidth(60);
+        fieldWithBookName.setPrefHeight(100);
+        fieldWithBookName.setPrefWidth(300);
         boxForTextFields.getChildren().add(fieldWithBookName);
 
         VBox boxForButton = new VBox();
@@ -380,7 +396,7 @@ public class BooksSection {
         System.out.println("this has to be displayed");
         boxForButton.getChildren().add(confirmButton);
         boxForBoxes.getChildren().addAll(boxForWords, boxForTextFields, boxForButton);
-        Scene optionsScene = new Scene(boxForBoxes, 300, 200);
+        Scene optionsScene = new Scene(boxForBoxes, 370, 230);
         optionsScene.getStylesheets().add(App.class.getResource("styles.css").toExternalForm());
         optionsStage.setScene(optionsScene);
         optionsStage.showAndWait();
