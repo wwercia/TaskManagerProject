@@ -28,7 +28,7 @@ public class CalendarSection {
         return boxForCalendarSection;
     }
 
-    private final VBox boxForCalendarSection = new VBox(25);
+    private final VBox boxForCalendarSection = new VBox(5);
     private final HBox boxForMonthNameAndForAddEventButton = new HBox(100);
     private final Label monthName = new Label();
     private final Button buttonAddNewEvent = new Button("Add event");
@@ -62,6 +62,7 @@ public class CalendarSection {
 
         boxForEventDescriptionn.getStyleClass().add("container-for-displaying-things");
         boxForEventDescription.getStyleClass().add("container-for-displaying-things");
+        //boxForEventDescription.setPrefHeight(100);
         boxForEventDescriptionn.setFitToWidth(true);
         boxForEventDescriptionn.setFitToHeight(true);
 
@@ -272,6 +273,13 @@ public class CalendarSection {
 
 
             ArrayList<Label> labelsToAdd = new ArrayList<>();
+            VBox box = new VBox();
+            ScrollPane scrollPane = new ScrollPane(box);
+            box.getStyleClass().add("container-for-displaying-things");
+            scrollPane.getStyleClass().add("container-for-displaying-things");
+            scrollPane.setFitToWidth(true);
+            scrollPane.setFitToHeight(true);
+
             for (Event event : events) {
                 Label labelToAdd = new Label();
                 String text = String.format("- %s  start: %s  end: %s", event.getEvent(), event.getStartTime(), event.getEndTime());
@@ -280,8 +288,9 @@ public class CalendarSection {
                 labelToAdd.setStyle("-fx-font-family: 'Pacifico';");
                 labelsToAdd.add(labelToAdd);
             }
+            box.getChildren().addAll(labelsToAdd);
 
-            boxForEventDescription.getChildren().addAll(labelsToAdd);
+            boxForEventDescription.getChildren().addAll(scrollPane);
         });
     }
 
