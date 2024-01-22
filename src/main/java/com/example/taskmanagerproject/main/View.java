@@ -43,7 +43,7 @@ public class View {
         VBox boxForExpensesSection = expensesSection.getBoxForExpensesSection();
 
         BooksSection booksSection = new BooksSection();
-        booksSection.initExpensesSection();
+        booksSection.initBooksSection();
         HBox boxForBooksSection = booksSection.getBoxForBooksSection();
 
         Font.loadFont(getClass().getResourceAsStream("Pacifico-Regular.ttf"), 10);

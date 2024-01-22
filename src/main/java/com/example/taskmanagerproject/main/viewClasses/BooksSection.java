@@ -13,6 +13,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Box;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -53,7 +54,7 @@ public class BooksSection {
     private final BookDao bookDao = new BookDao();
 
 
-    public void initExpensesSection() {
+    public void initBooksSection() {
         Font.loadFont(getClass().getResourceAsStream("Pacifico-Regular.ttf"), 10);
         wordBooksRead.getStyleClass().add("book_section_main_words");
         wordBooksRead.setStyle("-fx-font-family: 'Pacifico';");
@@ -110,7 +111,9 @@ public class BooksSection {
             button.setOnAction(event -> {
                 //przenosi książke do przeczytanych książek
                 String opinion = displayWindowToGetOpinion(book);
-                if (opinion == null || opinion.length() == 0) { return; }
+                if (opinion == null || opinion.length() == 0) {
+                    return;
+                }
                 book.setOpinion(opinion);
                 bookDao.updateOpinion(book);
                 book.setRead(true);
@@ -122,8 +125,9 @@ public class BooksSection {
                 addStyle(labelForBookOpinionn);
                 HBox boxforBookk = new HBox(8);
                 boxforBookk.getChildren().addAll(labelForBookNamee, labelForBookOpinionn);
-                boxForReadBooks.getChildren().add(boxforBookk);
+                boxForReadBooks.getChildren().add(0, boxforBookk);
                 readBooks.put(labelForBookNamee, boxforBookk);
+                booksRead.add(book);
             });
             boxForBooksToRead.getChildren().add(0, boxforBook);
             //readBooksMap.put(book, readBooks);
@@ -148,7 +152,7 @@ public class BooksSection {
 
         boxForBooksss.getChildren().addAll(booksForReadBooksPanes, boxForBooksToReadPanes);
 
-       // boxForBooksSection.getChildren().addAll(booksForReadBooksPanes, boxForBooksToReadPanes, boxForButtons);
+        // boxForBooksSection.getChildren().addAll(booksForReadBooksPanes, boxForBooksToReadPanes, boxForButtons);
         boxForBooksSection.getChildren().addAll(boxForBooksss, boxForButtons);
     }
 
@@ -233,6 +237,7 @@ public class BooksSection {
     }
 
     private Book bookToAdd;
+
     private void addBook() {
         Stage optionsStage = new Stage();
         optionsStage.initModality(Modality.APPLICATION_MODAL);
@@ -305,6 +310,7 @@ public class BooksSection {
                     boxforBookk.getChildren().addAll(labelForBookNamee, labelForBookOpinionn);
                     boxForReadBooks.getChildren().add(0, boxforBookk);
                     readBooks.put(labelForBookNamee, boxforBookk);
+                    booksRead.add(bookToAdd);
                 });
                 boxForBooksToRead.getChildren().add(0, boxforBook);
                 booksToReadMap.put(button, labelForBookName);
@@ -353,19 +359,19 @@ public class BooksSection {
                     return;
                 }
                 Book bookToDelete = null;
-                for(Book book : booksToRead){
-                    if(book.getName().equals(bookName.trim())){
+                for (Book book : booksToRead) {
+                    if (book.getName().equals(bookName.trim())) {
                         bookToDelete = book;
                     }
                 }
-                if(bookToDelete == null){
-                    for(Book book : booksRead){
-                        if(book.getName().equals(bookName.trim())){
+                if (bookToDelete == null) {
+                    for (Book book : booksRead) {
+                        if (book.getName().equals(bookName.trim())) {
                             bookToDelete = book;
                         }
                     }
                 }
-                if(bookToDelete == null){
+                if (bookToDelete == null) {
                     optionsStage.close();
                     return;
                 }
@@ -377,13 +383,13 @@ public class BooksSection {
                 // usuwa z ekranu jesli książka jest w przeczytanych książkach
                 HBox boxToDelete = null;
                 HashMap<Label, HBox> map = readBooks;
-                for(Map.Entry<Label, HBox> entry : map.entrySet()){
-                    if(entry.getKey().getText().equals(bookToDelete.getName())){
+                for (Map.Entry<Label, HBox> entry : map.entrySet()) {
+                    if (entry.getKey().getText().equals(bookToDelete.getName())) {
                         boxToDelete = entry.getValue();
                     }
                 }
                 boolean isDone = boxForReadBooks.getChildren().remove(boxToDelete);
-                if(isDone){
+                if (isDone) {
                     optionsStage.close();
                     return;
                 }
@@ -391,8 +397,8 @@ public class BooksSection {
                 // usuwa z ekranu jesli książka jest w nieprzeczytanych książkach
                 HBox boxToDeletee = null;
                 HashMap<Button, Label> mapp = booksToReadMap;
-                for(Map.Entry<Button, Label> entry : mapp.entrySet()){
-                    if(entry.getValue().getText().equals(bookToDelete.getName())){
+                for (Map.Entry<Button, Label> entry : mapp.entrySet()) {
+                    if (entry.getValue().getText().equals(bookToDelete.getName())) {
                         boxToDeletee = new HBox(entry.getKey(), entry.getValue());
                     }
                 }
@@ -409,7 +415,120 @@ public class BooksSection {
         optionsStage.showAndWait();
     }
 
+    private Book bookToEdit = null;
+
     private void editBook() {
+        Stage optionsStage = new Stage();
+        optionsStage.initModality(Modality.APPLICATION_MODAL);
+        optionsStage.setTitle("Editing book");
+
+        VBox boxForBoxes = new VBox(15);
+
+        boxForBoxes.getStyleClass().add("modern-container");
+
+        Label labelForOldName = new Label("Enter old name");
+        labelForOldName.getStyleClass().add("book_section_enter_opinion");
+        labelForOldName.setStyle("-fx-font-family: 'Pacifico';");
+
+        TextField fieldForEnterOldName = new TextField();
+        fieldForEnterOldName.setPrefHeight(100);
+        fieldForEnterOldName.setPrefWidth(300);
+
+        Button confirmButtonForOldName = new Button("confirm");
+
+        Label labelForNewName = new Label("Enter new name");
+        labelForNewName.getStyleClass().add("book_section_enter_opinion");
+        labelForNewName.setStyle("-fx-font-family: 'Pacifico';");
+
+        TextField fieldForEnterNewName = new TextField();
+        fieldForEnterNewName.setPrefHeight(100);
+        fieldForEnterNewName.setPrefWidth(300);
+
+        Button confirmButtonForNewName = new Button("confirm");
+
+        confirmButtonForOldName.setOnAction(event -> {
+            String bookName = fieldForEnterOldName.getText();
+            if (bookName == null || bookName.isEmpty()) {
+                optionsStage.close();
+                return;
+            }
+            System.out.println(bookName);
+            ArrayList<Book> books = new ArrayList<>();
+            books.addAll(booksRead);
+            books.addAll(booksToRead);
+            boolean isBookName = false;
+            for(Book book : books){
+                if(book.getName().equals(bookName)) {
+                    bookToEdit = book;
+                    isBookName = true;
+                }
+            }
+            if(!isBookName){
+                fieldForEnterNewName.setText("");
+                return;
+            }
+            fieldForEnterNewName.setText(bookName);
+        });
+
+        confirmButtonForNewName.setOnAction(event -> {
+
+            String newBookName = fieldForEnterNewName.getText();
+            if (newBookName == null || newBookName.isEmpty()) {
+                optionsStage.close();
+                return;
+            }
+
+            // jakoś musisz zrobić że zmienia sie nazwa w aplikacji na ekranie
+
+            // zmienia nazwe na keranie jesli jest w przeczytanych
+            Label labelToChange = null;
+            HashMap<Label, HBox> map = readBooks;
+            for (Map.Entry<Label, HBox> entry : map.entrySet()) {
+                if (entry.getKey().getText().equals(bookToEdit.getName())) {
+                    labelToChange = entry.getKey();
+                }
+            }
+
+            System.out.println("czy labelToChange1 jest null? " + (labelToChange == null));
+            if(labelToChange != null){
+                bookToEdit.setName(newBookName);
+                labelToChange.setText(bookToEdit.getName());
+                System.out.println("udało się 1");
+                bookDao.updateNameField(bookToEdit);
+                optionsStage.close();
+                return;
+            }
+
+            // usuwa z ekranu jesli książka jest w nieprzeczytanych książkach
+            Label labelTochange2 = null;
+            HashMap<Button, Label> mapp = booksToReadMap;
+            for (Map.Entry<Button, Label> entry : mapp.entrySet()) {
+                if (entry.getValue().getText().equals(bookToEdit.getName())) {
+                    labelTochange2 = entry.getValue();
+                }
+            }
+
+            System.out.println("czy boxToChange2 jest null? " + (labelTochange2 == null));
+            if(labelTochange2 != null){
+                bookToEdit.setName(newBookName);
+                labelTochange2.setText(bookToEdit.getName());
+                System.out.println("udało się 2");
+                bookDao.updateNameField(bookToEdit);
+                optionsStage.close();
+            }
+
+
+            optionsStage.close();
+
+        });
+
+        boxForBoxes.setAlignment(Pos.CENTER);
+        boxForBoxes.getChildren().addAll(labelForOldName, fieldForEnterOldName,
+                confirmButtonForOldName, labelForNewName, fieldForEnterNewName, confirmButtonForNewName);
+        Scene optionsScene = new Scene(boxForBoxes, 370, 400);
+        optionsScene.getStylesheets().add(App.class.getResource("styles.css").toExternalForm());
+        optionsStage.setScene(optionsScene);
+        optionsStage.showAndWait();
 
     }
 
