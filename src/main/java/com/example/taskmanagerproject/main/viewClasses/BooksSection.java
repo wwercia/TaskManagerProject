@@ -3,8 +3,6 @@ package com.example.taskmanagerproject.main.viewClasses;
 import com.example.taskmanagerproject.main.App;
 import com.example.taskmanagerproject.main.daoClasses.Book;
 import com.example.taskmanagerproject.main.daoClasses.BookDao;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,7 +11,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Box;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -44,9 +41,8 @@ public class BooksSection {
     private final Button editBookButton = new Button("edit book");
 
 
-    private HashMap<Label, HBox> readBooks = new HashMap<>();
-    private HashMap<Button, Label> booksToReadMap = new HashMap<>();
-    private HashMap<Book, HashMap<Label, HBox>> readBooksMap = new HashMap<>();
+    private final HashMap<Label, HBox> readBooks = new HashMap<>();
+    private final HashMap<Button, Label> booksToReadMap = new HashMap<>();
 
     private final ArrayList<Book> booksRead = new ArrayList<>();
     private final ArrayList<Book> booksToRead = new ArrayList<>();
@@ -66,8 +62,6 @@ public class BooksSection {
         boxForReadBooks.setPrefSize(370, 250);
         scrollPaneForReadBooks.setFitToWidth(true);
         scrollPaneForReadBooks.setFitToHeight(true);
-        //scrollPaneForReadBooks.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-        //scrollPaneForReadBooks.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         scrollPaneForBooksToRead.getStyleClass().add("container-for-displaying-things");
         boxForBooksToRead.getStyleClass().add("container-for-displaying-things");
         boxForBooksToRead.setPrefSize(370, 250);
@@ -93,7 +87,6 @@ public class BooksSection {
             boxforBook.getChildren().addAll(labelForBookName, labelForBookOpinion);
             boxForReadBooks.getChildren().add(0, boxforBook);
             readBooks.put(labelForBookName, boxforBook);
-            readBooksMap.put(book, readBooks);
         }
 
         for (Book book : booksToRead) {
@@ -211,13 +204,10 @@ public class BooksSection {
         Button confirmbutton = new Button("confirm");
         confirmbutton.getStyleClass().add("grey-button");
 
-        confirmbutton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                String taskk = opinion.getText();
-                opinionnn = taskk;
-                optionsStage.close();
-            }
+        confirmbutton.setOnAction(event -> {
+            opinionnn = opinion.getText();
+            optionsStage.close();
+
         });
 
         System.out.println("this has to be displayed");
@@ -267,55 +257,52 @@ public class BooksSection {
         Button addBookButton = new Button("confirm");
         addBookButton.getStyleClass().add("grey-button");
 
-        addBookButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                String bookName = fieldWithBookName.getText();
-                if (bookName == null || bookName.isEmpty()) {
-                    optionsStage.close();
+        addBookButton.setOnAction(actionEvent -> {
+            String bookName = fieldWithBookName.getText();
+            if (bookName == null || bookName.isEmpty()) {
+                optionsStage.close();
+                return;
+            }
+            bookToAdd = new Book(bookName, false, null);
+            bookDao.addBook(bookToAdd);
+            booksToRead.add(bookToAdd);
+
+            Button button = new Button();
+            button.getStyleClass().add("book_section_button");
+            button.setMinSize(15, 15);
+            button.setMaxSize(15, 15);
+            button.setPrefSize(15, 15);
+            Label labelForBookName = new Label(bookToAdd.getName());
+            addStyle(labelForBookName);
+            HBox boxforBook = new HBox(5);
+            boxforBook.setAlignment(Pos.CENTER_LEFT);
+            boxforBook.getChildren().addAll(button, labelForBookName);
+            button.setOnAction(event -> {
+                //przenosi książke do przeczytanych książek
+
+                String opinion = displayWindowToGetOpinion(bookToAdd);
+                if (opinion == null || opinion.length() == 0) {
                     return;
                 }
-                bookToAdd = new Book(bookName, false, null);
-                bookDao.addBook(bookToAdd);
-                booksToRead.add(bookToAdd);
+                bookToAdd.setOpinion(opinion);
+                bookDao.updateOpinion(bookToAdd);
+                bookToAdd.setRead(true);
+                bookDao.updateIsReadField(bookToAdd);
 
-                Button button = new Button();
-                button.getStyleClass().add("book_section_button");
-                button.setMinSize(15, 15);
-                button.setMaxSize(15, 15);
-                button.setPrefSize(15, 15);
-                Label labelForBookName = new Label(bookToAdd.getName());
-                addStyle(labelForBookName);
-                HBox boxforBook = new HBox(5);
-                boxforBook.setAlignment(Pos.CENTER_LEFT);
-                boxforBook.getChildren().addAll(button, labelForBookName);
-                button.setOnAction(event -> {
-                    //przenosi książke do przeczytanych książek
-
-                    String opinion = displayWindowToGetOpinion(bookToAdd);
-                    if (opinion == null || opinion.length() == 0) {
-                        return;
-                    }
-                    bookToAdd.setOpinion(opinion);
-                    bookDao.updateOpinion(bookToAdd);
-                    bookToAdd.setRead(true);
-                    bookDao.updateIsReadField(bookToAdd);
-
-                    boxforBook.getChildren().removeAll(button, labelForBookName);
-                    Label labelForBookNamee = new Label(bookToAdd.getName());
-                    Label labelForBookOpinionn = new Label(bookToAdd.getOpinion() + "/5");
-                    addStyle(labelForBookNamee);
-                    addStyle(labelForBookOpinionn);
-                    HBox boxforBookk = new HBox(8);
-                    boxforBookk.getChildren().addAll(labelForBookNamee, labelForBookOpinionn);
-                    boxForReadBooks.getChildren().add(0, boxforBookk);
-                    readBooks.put(labelForBookNamee, boxforBookk);
-                    booksRead.add(bookToAdd);
-                });
-                boxForBooksToRead.getChildren().add(0, boxforBook);
-                booksToReadMap.put(button, labelForBookName);
-                optionsStage.close();
-            }
+                boxforBook.getChildren().removeAll(button, labelForBookName);
+                Label labelForBookNamee = new Label(bookToAdd.getName());
+                Label labelForBookOpinionn = new Label(bookToAdd.getOpinion() + "/5");
+                addStyle(labelForBookNamee);
+                addStyle(labelForBookOpinionn);
+                HBox boxforBookk = new HBox(8);
+                boxforBookk.getChildren().addAll(labelForBookNamee, labelForBookOpinionn);
+                boxForReadBooks.getChildren().add(0, boxforBookk);
+                readBooks.put(labelForBookNamee, boxforBookk);
+                booksRead.add(bookToAdd);
+            });
+            boxForBooksToRead.getChildren().add(0, boxforBook);
+            booksToReadMap.put(button, labelForBookName);
+            optionsStage.close();
         });
         boxForButton.getChildren().add(addBookButton);
         boxForBoxes.getChildren().addAll(boxForWords, boxForTextFields, boxForButton);
@@ -350,61 +337,56 @@ public class BooksSection {
         Button confirmButton = new Button("confirm");
         confirmButton.getStyleClass().add("grey-button");
 
-        confirmButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                String bookName = fieldWithBookName.getText();
-                if (bookName == null || bookName.isEmpty()) {
-                    optionsStage.close();
-                    return;
+        confirmButton.setOnAction(actionEvent -> {
+            String bookName = fieldWithBookName.getText();
+            if (bookName == null || bookName.isEmpty()) {
+                optionsStage.close();
+                return;
+            }
+            Book bookToDelete = null;
+            for (Book book : booksToRead) {
+                if (book.getName().equals(bookName.trim())) {
+                    bookToDelete = book;
                 }
-                Book bookToDelete = null;
-                for (Book book : booksToRead) {
+            }
+            if (bookToDelete == null) {
+                for (Book book : booksRead) {
                     if (book.getName().equals(bookName.trim())) {
                         bookToDelete = book;
                     }
                 }
-                if (bookToDelete == null) {
-                    for (Book book : booksRead) {
-                        if (book.getName().equals(bookName.trim())) {
-                            bookToDelete = book;
-                        }
-                    }
-                }
-                if (bookToDelete == null) {
-                    optionsStage.close();
-                    return;
-                }
-
-                bookDao.deleteBook(bookToDelete);
-                booksToRead.remove(bookToDelete);
-                booksRead.remove(bookToDelete);
-
-                // usuwa z ekranu jesli książka jest w przeczytanych książkach
-                HBox boxToDelete = null;
-                HashMap<Label, HBox> map = readBooks;
-                for (Map.Entry<Label, HBox> entry : map.entrySet()) {
-                    if (entry.getKey().getText().equals(bookToDelete.getName())) {
-                        boxToDelete = entry.getValue();
-                    }
-                }
-                boolean isDone = boxForReadBooks.getChildren().remove(boxToDelete);
-                if (isDone) {
-                    optionsStage.close();
-                    return;
-                }
-
-                // usuwa z ekranu jesli książka jest w nieprzeczytanych książkach
-                HBox boxToDeletee = null;
-                HashMap<Button, Label> mapp = booksToReadMap;
-                for (Map.Entry<Button, Label> entry : mapp.entrySet()) {
-                    if (entry.getValue().getText().equals(bookToDelete.getName())) {
-                        boxToDeletee = new HBox(entry.getKey(), entry.getValue());
-                    }
-                }
-                boxForBooksToRead.getChildren().remove(boxToDeletee);
-                optionsStage.close();
             }
+            if (bookToDelete == null) {
+                optionsStage.close();
+                return;
+            }
+
+            bookDao.deleteBook(bookToDelete);
+            booksToRead.remove(bookToDelete);
+            booksRead.remove(bookToDelete);
+
+            // usuwa z ekranu jesli książka jest w przeczytanych książkach
+            HBox boxToDelete = null;
+            for (Map.Entry<Label, HBox> entry : readBooks.entrySet()) {
+                if (entry.getKey().getText().equals(bookToDelete.getName())) {
+                    boxToDelete = entry.getValue();
+                }
+            }
+            boolean isDone = boxForReadBooks.getChildren().remove(boxToDelete);
+            if (isDone) {
+                optionsStage.close();
+                return;
+            }
+
+            // usuwa z ekranu jesli książka jest w nieprzeczytanych książkach
+            HBox boxToDeletee = null;
+            for (Map.Entry<Button, Label> entry : booksToReadMap.entrySet()) {
+                if (entry.getValue().getText().equals(bookToDelete.getName())) {
+                    boxToDeletee = new HBox(entry.getKey(), entry.getValue());
+                }
+            }
+            boxForBooksToRead.getChildren().remove(boxToDeletee);
+            optionsStage.close();
         });
         System.out.println("this has to be displayed");
         boxForButton.getChildren().add(confirmButton);
@@ -457,13 +439,13 @@ public class BooksSection {
             books.addAll(booksRead);
             books.addAll(booksToRead);
             boolean isBookName = false;
-            for(Book book : books){
-                if(book.getName().equals(bookName)) {
+            for (Book book : books) {
+                if (book.getName().equals(bookName)) {
                     bookToEdit = book;
                     isBookName = true;
                 }
             }
-            if(!isBookName){
+            if (!isBookName) {
                 fieldForEnterNewName.setText("");
                 return;
             }
@@ -482,15 +464,14 @@ public class BooksSection {
 
             // zmienia nazwe na keranie jesli jest w przeczytanych
             Label labelToChange = null;
-            HashMap<Label, HBox> map = readBooks;
-            for (Map.Entry<Label, HBox> entry : map.entrySet()) {
+            for (Map.Entry<Label, HBox> entry : readBooks.entrySet()) {
                 if (entry.getKey().getText().equals(bookToEdit.getName())) {
                     labelToChange = entry.getKey();
                 }
             }
 
             System.out.println("czy labelToChange1 jest null? " + (labelToChange == null));
-            if(labelToChange != null){
+            if (labelToChange != null) {
                 bookToEdit.setName(newBookName);
                 labelToChange.setText(bookToEdit.getName());
                 System.out.println("udało się 1");
@@ -501,15 +482,14 @@ public class BooksSection {
 
             // usuwa z ekranu jesli książka jest w nieprzeczytanych książkach
             Label labelTochange2 = null;
-            HashMap<Button, Label> mapp = booksToReadMap;
-            for (Map.Entry<Button, Label> entry : mapp.entrySet()) {
+            for (Map.Entry<Button, Label> entry : booksToReadMap.entrySet()) {
                 if (entry.getValue().getText().equals(bookToEdit.getName())) {
                     labelTochange2 = entry.getValue();
                 }
             }
 
             System.out.println("czy boxToChange2 jest null? " + (labelTochange2 == null));
-            if(labelTochange2 != null){
+            if (labelTochange2 != null) {
                 bookToEdit.setName(newBookName);
                 labelTochange2.setText(bookToEdit.getName());
                 System.out.println("udało się 2");

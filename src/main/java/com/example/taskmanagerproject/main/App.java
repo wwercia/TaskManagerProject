@@ -7,16 +7,11 @@ import javafx.stage.Stage;
 
 public class App extends Application {
 
-    private Model model;
     private View view;
-    private Controller controller;
-
 
     @Override
     public void start(Stage stage) throws Exception {
-        model = new Model();
         view = new View();
-        controller = new Controller(model, view);
         HBox root = view.initView();
         // v - width, v1 - height
         Scene scene = new Scene(root, 625, 525);

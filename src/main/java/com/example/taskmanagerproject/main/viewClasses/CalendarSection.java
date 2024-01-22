@@ -5,8 +5,6 @@ import com.example.taskmanagerproject.main.daoClasses.Day;
 import com.example.taskmanagerproject.main.daoClasses.DayDao;
 import com.example.taskmanagerproject.main.daoClasses.Event;
 import com.example.taskmanagerproject.main.daoClasses.EventDao;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -363,45 +361,42 @@ public class CalendarSection {
         Button deleteEventButton = new Button("Delete event");
         deleteEventButton.getStyleClass().add("grey-button");
 
-        deleteEventButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                String dayy = dayField.getText();
-                int day = 40;
-                if (dayy.length() > 0) {
-                    day = Integer.parseInt(dayy);
-                }
-                String start = startTimeField.getText();
-                String end = endTimeField.getText();
-                eventToDelete = new Event(start, end, day, currentMonth, null);
-                if (!isEverythingFilled(day, start, end)) {
-                    optionsStage.close();
-                    return;
-                }
-
-                eventDao.deleteEvent(eventToDelete);
-
-                Day dayyy = new Day(day, null, currentMonth, null);
-                ArrayList<Event> events = eventDao.getEventsInSpecifiedDay(dayyy.getNumber(), dayyy.getMonth());
-
-                Button button = null;
-                for (Map.Entry<Day, Button> entry : days.entrySet()) {
-                    if (Objects.equals(entry.getKey().getNumber(), dayyy.getNumber())) {
-                        button = entry.getValue();
-                    }
-                }
-                System.out.println(dayyy.getNumber());
-                if (button != null && events.size() == 0) {
-                    button.setText("");
-                    changeLookToButtonWithoutEvent(button, dayyy.getNumber());
-                }
-
-                if (button != null && button.equals(currentlyClickedButton)) {
-                    button.fire();
-                }
-
-                optionsStage.close();
+        deleteEventButton.setOnAction(actionEvent -> {
+            String dayy = dayField.getText();
+            int day = 40;
+            if (dayy.length() > 0) {
+                day = Integer.parseInt(dayy);
             }
+            String start = startTimeField.getText();
+            String end = endTimeField.getText();
+            eventToDelete = new Event(start, end, day, currentMonth, null);
+            if (!isEverythingFilled(day, start, end)) {
+                optionsStage.close();
+                return;
+            }
+
+            eventDao.deleteEvent(eventToDelete);
+
+            Day dayyy = new Day(day, null, currentMonth, null);
+            ArrayList<Event> events = eventDao.getEventsInSpecifiedDay(dayyy.getNumber(), dayyy.getMonth());
+
+            Button button = null;
+            for (Map.Entry<Day, Button> entry : days.entrySet()) {
+                if (Objects.equals(entry.getKey().getNumber(), dayyy.getNumber())) {
+                    button = entry.getValue();
+                }
+            }
+            System.out.println(dayyy.getNumber());
+            if (button != null && events.size() == 0) {
+                button.setText("");
+                changeLookToButtonWithoutEvent(button, dayyy.getNumber());
+            }
+
+            if (button != null && button.equals(currentlyClickedButton)) {
+                button.fire();
+            }
+
+            optionsStage.close();
         });
         boxForButton.getChildren().add(deleteEventButton);
 
@@ -463,47 +458,44 @@ public class CalendarSection {
         Button addEventButton = new Button("Add event");
         addEventButton.getStyleClass().add("grey-button");
 
-        addEventButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                String dayy = dayField.getText();
-                int day = 40;
-                if (dayy.length() > 0) {
-                    day = Integer.parseInt(dayy);
-                }
-                String start = startTimeField.getText();
-                String end = endTimeField.getText();
-                String eventtt = eventField.getText();
-                System.out.println("start: " + start);
-                System.out.println("end: " + end);
-                if (!isEverythingFilled(day, start, end, eventtt)) {
-                    optionsStage.close();
-                    return;
-                }
-                eventToAdd = new Event(start, end, day, currentMonth, eventtt);
-                eventDao.addEvent(eventToAdd);
-
-                Day dayyy = new Day(day, null, currentMonth, null);
-                ArrayList<Event> events = eventDao.getEventsInSpecifiedDay(dayyy.getNumber(), dayyy.getMonth());
-
-                Button button = null;
-                for (Map.Entry<Day, Button> entry : days.entrySet()) {
-                    if (Objects.equals(entry.getKey().getNumber(), dayyy.getNumber())) {
-                        button = entry.getValue();
-                    }
-                }
-                System.out.println(dayyy.getNumber());
-                if (button != null && events.size() != 0) {
-                    button.setText("");
-                    changeLookToButtonWithEvent(button, dayyy.getNumber());
-                }
-
-                if (button != null && button.equals(currentlyClickedButton)) {
-                    button.fire();
-                }
-
-                optionsStage.close();
+        addEventButton.setOnAction(actionEvent -> {
+            String dayy = dayField.getText();
+            int day = 40;
+            if (dayy.length() > 0) {
+                day = Integer.parseInt(dayy);
             }
+            String start = startTimeField.getText();
+            String end = endTimeField.getText();
+            String eventtt = eventField.getText();
+            System.out.println("start: " + start);
+            System.out.println("end: " + end);
+            if (!isEverythingFilled(day, start, end, eventtt)) {
+                optionsStage.close();
+                return;
+            }
+            eventToAdd = new Event(start, end, day, currentMonth, eventtt);
+            eventDao.addEvent(eventToAdd);
+
+            Day dayyy = new Day(day, null, currentMonth, null);
+            ArrayList<Event> events = eventDao.getEventsInSpecifiedDay(dayyy.getNumber(), dayyy.getMonth());
+
+            Button button = null;
+            for (Map.Entry<Day, Button> entry : days.entrySet()) {
+                if (Objects.equals(entry.getKey().getNumber(), dayyy.getNumber())) {
+                    button = entry.getValue();
+                }
+            }
+            System.out.println(dayyy.getNumber());
+            if (button != null && events.size() != 0) {
+                button.setText("");
+                changeLookToButtonWithEvent(button, dayyy.getNumber());
+            }
+
+            if (button != null && button.equals(currentlyClickedButton)) {
+                button.fire();
+            }
+
+            optionsStage.close();
         });
 
         boxForButton.getChildren().add(addEventButton);

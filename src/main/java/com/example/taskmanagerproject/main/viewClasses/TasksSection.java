@@ -2,8 +2,6 @@ package com.example.taskmanagerproject.main.viewClasses;
 
 import com.example.taskmanagerproject.main.App;
 import com.example.taskmanagerproject.main.daoClasses.*;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -17,8 +15,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class TasksSection {
@@ -45,14 +41,10 @@ public class TasksSection {
     private final ArrayList<HBox> hBoxes = new ArrayList<>();
     private final TaskDao taskDao = new TaskDao();
     private final TodayDao todayDao = new TodayDao();
-    private String currentMonth;
+
 
     public void initTasksSection() {
         Font.loadFont(getClass().getResourceAsStream("Pacifico-Regular.ttf"), 10);
-
-        Calendar cal = Calendar.getInstance();
-        SimpleDateFormat month_date = new SimpleDateFormat("MMMM", Locale.ENGLISH);
-        currentMonth = month_date.format(cal.getTime());
 
         toDoWord.setText("To do:");
         toDoWord.getStyleClass().add("good-font-text");
@@ -185,47 +177,44 @@ public class TasksSection {
         Button addTaskButton = new Button("add task");
         addTaskButton.getStyleClass().add("grey-button");
 
-        addTaskButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                String task = taskField.getText();
+        addTaskButton.setOnAction(actionEvent -> {
+            String task = taskField.getText();
 
-                if (task == null || task.isEmpty()) {
-                    optionsStage.close();
-                    return;
-                }
-                taskToAdd = new Task(task, 2, false);
-                taskDao.addTask(taskToAdd);
-                listOfTasksInOrder.add(taskToAdd);
-
-                Button buttonForNewTask = new Button("");
-                buttonForNewTask.getStyleClass().add("task_button");
-                buttonForNewTask.setStyle("-fx-font-family: 'Pacifico';");
-                buttonForNewTask.setPrefWidth(50);
-                buttonForNewTask.setPrefHeight(40);
-                buttonForNewTask.setOnAction(event -> {
-                    taskToAdd.setDone(!taskToAdd.isDone());
-                    taskDao.updateIsDoneField(taskToAdd);
-                    updateButtonColor(buttonForNewTask, taskToAdd.isDone());
-                });
-                Label labelForNewTask = new Label(taskToAdd.getTask());
-                labelForNewTask.getStyleClass().add("events");
-                labelForNewTask.setStyle("-fx-font-family: 'Pacifico';");
-
-                //test
-                changeLabelColor(labelForNewTask, taskToAdd.getImportanceLevel());
-
-                HBox boxforTask = new HBox(10);
-                boxforTask.getChildren().addAll(buttonForNewTask, labelForNewTask);
-                boxForTasks.getChildren().add(boxforTask);
-
-                tasks.put(taskToAdd, buttonForNewTask);
-                hBoxes.add(boxforTask);
-                buttons.add(buttonForNewTask);
-                labels.add(labelForNewTask);
-                listOfTasksInOrder.add(taskToAdd);
+            if (task == null || task.isEmpty()) {
                 optionsStage.close();
+                return;
             }
+            taskToAdd = new Task(task, 2, false);
+            taskDao.addTask(taskToAdd);
+            listOfTasksInOrder.add(taskToAdd);
+
+            Button buttonForNewTask = new Button("");
+            buttonForNewTask.getStyleClass().add("task_button");
+            buttonForNewTask.setStyle("-fx-font-family: 'Pacifico';");
+            buttonForNewTask.setPrefWidth(50);
+            buttonForNewTask.setPrefHeight(40);
+            buttonForNewTask.setOnAction(event -> {
+                taskToAdd.setDone(!taskToAdd.isDone());
+                taskDao.updateIsDoneField(taskToAdd);
+                updateButtonColor(buttonForNewTask, taskToAdd.isDone());
+            });
+            Label labelForNewTask = new Label(taskToAdd.getTask());
+            labelForNewTask.getStyleClass().add("events");
+            labelForNewTask.setStyle("-fx-font-family: 'Pacifico';");
+
+            //test
+            changeLabelColor(labelForNewTask, taskToAdd.getImportanceLevel());
+
+            HBox boxforTask = new HBox(10);
+            boxforTask.getChildren().addAll(buttonForNewTask, labelForNewTask);
+            boxForTasks.getChildren().add(boxforTask);
+
+            tasks.put(taskToAdd, buttonForNewTask);
+            hBoxes.add(boxforTask);
+            buttons.add(buttonForNewTask);
+            labels.add(labelForNewTask);
+            listOfTasksInOrder.add(taskToAdd);
+            optionsStage.close();
         });
         boxForButton.getChildren().add(addTaskButton);
         boxForBoxes.getChildren().addAll(boxForWords, boxForTextFields, boxForButton);
@@ -265,50 +254,47 @@ public class TasksSection {
         Button deleteTaskButton = new Button("delete task");
         deleteTaskButton.getStyleClass().add("grey-button");
 
-        deleteTaskButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                String taskk = taskField.getText();
-                int task = 100;
-                if (taskk.length() > 0) {
-                    task = Integer.parseInt(taskk);
-                }
-                if(task == 100){
-                    optionsStage.close();
-                    return;
-                }
-                Task taskToDelete = null;
-                for (int i = 0; i < listOfTasksInOrder.size(); i++) {
-                    if (i == task - 1) {
-                        taskToDelete = listOfTasksInOrder.get(i);
-                        break;
-                    }
-                }
-                if (taskToDelete == null) {
-                    return;
-                }
-
-                taskDao.deleteTask(taskToDelete.getId());
-
-                Button buttonToRemove = null;
-                for (Map.Entry<Task, Button> entry : tasks.entrySet()) {
-                    if (entry.getKey().equals(taskToDelete)) {
-                        buttonToRemove = entry.getValue();
-                    }
-                }
-
-                int index = buttons.indexOf(buttonToRemove);
-                HBox box = hBoxes.get(index);
-
-                System.out.println(buttonToRemove);
-                System.out.println(box);
-
-                if (buttonToRemove != null && box != null) {
-                    boxForTasks.getChildren().remove(box);
-                }
-
-                optionsStage.close();
+        deleteTaskButton.setOnAction(actionEvent -> {
+            String taskk = taskField.getText();
+            int task = 100;
+            if (taskk.length() > 0) {
+                task = Integer.parseInt(taskk);
             }
+            if(task == 100){
+                optionsStage.close();
+                return;
+            }
+            Task taskToDelete = null;
+            for (int i = 0; i < listOfTasksInOrder.size(); i++) {
+                if (i == task - 1) {
+                    taskToDelete = listOfTasksInOrder.get(i);
+                    break;
+                }
+            }
+            if (taskToDelete == null) {
+                return;
+            }
+
+            taskDao.deleteTask(taskToDelete.getId());
+
+            Button buttonToRemove = null;
+            for (Map.Entry<Task, Button> entry : tasks.entrySet()) {
+                if (entry.getKey().equals(taskToDelete)) {
+                    buttonToRemove = entry.getValue();
+                }
+            }
+
+            int index = buttons.indexOf(buttonToRemove);
+            HBox box = hBoxes.get(index);
+
+            System.out.println(buttonToRemove);
+            System.out.println(box);
+
+            if (buttonToRemove != null && box != null) {
+                boxForTasks.getChildren().remove(box);
+            }
+
+            optionsStage.close();
         });
 
         System.out.println("this has to be displayed");
@@ -357,37 +343,34 @@ public class TasksSection {
         Button addEventButton = new Button("confirm");
         addEventButton.getStyleClass().add("grey-button");
 
-        addEventButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                String taskk = taskField.getText();
-                int task = 100;
-                if (taskk.length() > 0) {
-                    task = Integer.parseInt(taskk);
-                }
-                if(task == 100){
-                    optionsStage.close();
-                    return;
-                }
-                for (int i = 0; i < listOfTasksInOrder.size(); i++) {
-                    if (i == task - 1) {
-                        taskToBeEdited = listOfTasksInOrder.get(i);
-                        break;
-                    }
-                }
-                if (taskToBeEdited == null) {
-                    return;
-                }
-                Button buttonForGettingIndex = null;
-                for (Map.Entry<Task, Button> entry : tasks.entrySet()) {
-                    if (entry.getKey().equals(taskToBeEdited)) {
-                        buttonForGettingIndex = entry.getValue();
-                    }
-                }
-                int index = buttons.indexOf(buttonForGettingIndex);
-                labelOfTaskToBeEdited = labels.get(index);
-                optionsStage.close();
+        addEventButton.setOnAction(actionEvent -> {
+            String taskk = taskField.getText();
+            int task = 100;
+            if (taskk.length() > 0) {
+                task = Integer.parseInt(taskk);
             }
+            if(task == 100){
+                optionsStage.close();
+                return;
+            }
+            for (int i = 0; i < listOfTasksInOrder.size(); i++) {
+                if (i == task - 1) {
+                    taskToBeEdited = listOfTasksInOrder.get(i);
+                    break;
+                }
+            }
+            if (taskToBeEdited == null) {
+                return;
+            }
+            Button buttonForGettingIndex = null;
+            for (Map.Entry<Task, Button> entry : tasks.entrySet()) {
+                if (entry.getKey().equals(taskToBeEdited)) {
+                    buttonForGettingIndex = entry.getValue();
+                }
+            }
+            int index = buttons.indexOf(buttonForGettingIndex);
+            labelOfTaskToBeEdited = labels.get(index);
+            optionsStage.close();
         });
 
         boxForButton.getChildren().add(addEventButton);
@@ -437,15 +420,12 @@ public class TasksSection {
         Button addEventButton2 = new Button("confirm");
         addEventButton2.getStyleClass().add("grey-button");
 
-        addEventButton2.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                labelOfTaskToBeEdited.setText(taskField2.getText());
-                taskToBeEdited.setTask(taskField2.getText());
-                boolean isGood = taskDao.updateTask(taskToBeEdited);
-                System.out.println(isGood);
-                optionsStage2.close();
-            }
+        addEventButton2.setOnAction(actionEvent -> {
+            labelOfTaskToBeEdited.setText(taskField2.getText());
+            taskToBeEdited.setTask(taskField2.getText());
+            boolean isGood = taskDao.updateTask(taskToBeEdited);
+            System.out.println(isGood);
+            optionsStage2.close();
         });
 
         boxForButton2.getChildren().add(addEventButton2);
@@ -460,7 +440,7 @@ public class TasksSection {
         optionsStage2.showAndWait();
     }
 
-    private Button notImportant = new Button("not important");
+    private final Button notImportant = new Button("not important");
     private Button previousClickedButton = notImportant;
     private Task taskToBeMarked = null;
     private int importanceLevel = 1;
@@ -521,50 +501,47 @@ public class TasksSection {
         Button confirmbutton = new Button("confirm");
         confirmbutton.getStyleClass().add("grey-button");
 
-        confirmbutton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                String taskk = taskNumberField.getText();
-                int taskNumber = 100;
-                if (taskk.length() > 0) {
-                    taskNumber = Integer.parseInt(taskk);
-                }
-                if(taskNumber == 100){
-                    optionsStage.close();
-                    return;
-                }
-
-                for (int i = 0; i < listOfTasksInOrder.size(); i++) {
-                    if (i == taskNumber - 1) {
-                        taskToBeMarked = listOfTasksInOrder.get(i);
-                        break;
-                    }
-                }
-
-                Button buttonForGettingIndex = null;
-                for (Map.Entry<Task, Button> entry : tasks.entrySet()) {
-                    if (entry.getKey().equals(taskToBeMarked)) {
-                        buttonForGettingIndex = entry.getValue();
-                    }
-                }
-                int index = buttons.indexOf(buttonForGettingIndex);
-                Label labelToChangeColor = labels.get(index);
-
-                taskToBeMarked.setImportanceLevel(importanceLevel);
-                System.out.println(taskDao.updateImportanceLevel(taskToBeMarked));
-
-                System.out.println("index: " + index);
-                System.out.println("importance level: " + importanceLevel);
-                System.out.println("task level: " + taskToBeMarked.getImportanceLevel());
-
-                changeLabelColor(labelToChangeColor, importanceLevel);
-
-                previousClickedButton = notImportant;
-                taskToBeMarked = null;
-                importanceLevel = 1;
-
-                optionsStage.close();
+        confirmbutton.setOnAction(actionEvent -> {
+            String taskk = taskNumberField.getText();
+            int taskNumber = 100;
+            if (taskk.length() > 0) {
+                taskNumber = Integer.parseInt(taskk);
             }
+            if(taskNumber == 100){
+                optionsStage.close();
+                return;
+            }
+
+            for (int i = 0; i < listOfTasksInOrder.size(); i++) {
+                if (i == taskNumber - 1) {
+                    taskToBeMarked = listOfTasksInOrder.get(i);
+                    break;
+                }
+            }
+
+            Button buttonForGettingIndex = null;
+            for (Map.Entry<Task, Button> entry : tasks.entrySet()) {
+                if (entry.getKey().equals(taskToBeMarked)) {
+                    buttonForGettingIndex = entry.getValue();
+                }
+            }
+            int index = buttons.indexOf(buttonForGettingIndex);
+            Label labelToChangeColor = labels.get(index);
+
+            taskToBeMarked.setImportanceLevel(importanceLevel);
+            System.out.println(taskDao.updateImportanceLevel(taskToBeMarked));
+
+            System.out.println("index: " + index);
+            System.out.println("importance level: " + importanceLevel);
+            System.out.println("task level: " + taskToBeMarked.getImportanceLevel());
+
+            changeLabelColor(labelToChangeColor, importanceLevel);
+
+            previousClickedButton = notImportant;
+            taskToBeMarked = null;
+            importanceLevel = 1;
+
+            optionsStage.close();
         });
         boxForButton.getChildren().add(confirmbutton);
         boxForBoxes.getChildren().addAll(boxForWords, boxForButtons, boxForTaskNumber, boxForButton);

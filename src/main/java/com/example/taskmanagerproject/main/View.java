@@ -9,25 +9,23 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Box;
 import javafx.scene.text.Font;
-
-import java.net.MalformedURLException;
 
 public class View {
 
-    private VBox boxForMenuButtons = new VBox(10);
-    private Button buttonForCalendar = new Button("Calendar");
-    private Button buttonForTasks = new Button("Tasks");
-    private Button buttonForExpenses = new Button("Expenses");
-    private Button buttonForBookTracker = new Button("Books");
+    private final VBox boxForMenuButtons = new VBox(10);
+    private final Button buttonForCalendar = new Button("Calendar");
+    private final Button buttonForTasks = new Button("Tasks");
+    private final Button buttonForExpenses = new Button("Expenses");
+    private final Button buttonForBookTracker = new Button("Books");
 
-    private HBox boxForBoxes = new HBox(15);
+    private final HBox boxForBoxes = new HBox(15);
 
 
     private Button previousClickedButton = null;
     private Pane currentlyDisplayingSection = null;
-    public HBox initView() throws MalformedURLException {
+
+    public HBox initView() {
 
         CalendarSection calendarSection = new CalendarSection();
         calendarSection.initCalendarSection();
@@ -57,7 +55,7 @@ public class View {
 
         buttonForCalendar.setOnAction(event -> {
             changeButtonsColor(buttonForCalendar, "buttonForCalendar");
-            if(!currentlyDisplayingSection.equals(boxForCalendarSection)){
+            if (!currentlyDisplayingSection.equals(boxForCalendarSection)) {
                 boxForBoxes.getChildren().remove(currentlyDisplayingSection);
                 boxForBoxes.getChildren().add(boxForCalendarSection);
                 currentlyDisplayingSection = boxForCalendarSection;
@@ -65,7 +63,7 @@ public class View {
         });
         buttonForTasks.setOnAction(event -> {
             changeButtonsColor(buttonForTasks, "buttonForTasks");
-            if(!currentlyDisplayingSection.equals(boxForTasksSection)){
+            if (!currentlyDisplayingSection.equals(boxForTasksSection)) {
                 boxForBoxes.getChildren().remove(currentlyDisplayingSection);
                 boxForBoxes.getChildren().add(boxForTasksSection);
                 currentlyDisplayingSection = boxForTasksSection;
@@ -73,7 +71,7 @@ public class View {
         });
         buttonForExpenses.setOnAction(event -> {
             changeButtonsColor(buttonForExpenses, "buttonForExpenses");
-            if(!currentlyDisplayingSection.equals(boxForExpensesSection)){
+            if (!currentlyDisplayingSection.equals(boxForExpensesSection)) {
                 boxForBoxes.getChildren().remove(currentlyDisplayingSection);
                 boxForBoxes.getChildren().add(boxForExpensesSection);
                 currentlyDisplayingSection = boxForExpensesSection;
@@ -81,7 +79,7 @@ public class View {
         });
         buttonForBookTracker.setOnAction(event -> {
             changeButtonsColor(buttonForBookTracker, "buttonForBookTracker");
-            if(!currentlyDisplayingSection.equals(boxForBooksSection)){
+            if (!currentlyDisplayingSection.equals(boxForBooksSection)) {
                 boxForBoxes.getChildren().remove(currentlyDisplayingSection);
                 boxForBoxes.getChildren().add(boxForBooksSection);
                 currentlyDisplayingSection = boxForBooksSection;
@@ -105,7 +103,6 @@ public class View {
 
     private void changeButtonsColor(Button button, String name) {
         if (previousClickedButton != null && previousClickedButton.equals(button)) {
-            return;
         } else {
             finalColorChange(button, name);
             if (previousClickedButton != null) {
@@ -115,7 +112,6 @@ public class View {
             previousButtonName = name;
         }
     }
-
 
     private void finalColorChange(Button button, String name) {
         if (button.getStyleClass().contains("clicked-button")) {
