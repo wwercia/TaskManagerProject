@@ -404,7 +404,7 @@ public class CalendarSection {
 
         Scene optionsScene = new Scene(boxForBoxes, 500, 240);
 
-        optionsScene.getStylesheets().add(App.class.getResource("styles.css").toExternalForm());
+        optionsScene.getStylesheets().add(Objects.requireNonNull(App.class.getResource("styles.css")).toExternalForm());
 
         optionsStage.setScene(optionsScene);
         optionsStage.showAndWait();
@@ -504,7 +504,7 @@ public class CalendarSection {
 
         Scene optionsScene = new Scene(boxForBoxes, 500, 240);
 
-        optionsScene.getStylesheets().add(App.class.getResource("styles.css").toExternalForm());
+        optionsScene.getStylesheets().add(Objects.requireNonNull(App.class.getResource("styles.css")).toExternalForm());
 
         optionsStage.setScene(optionsScene);
         optionsStage.showAndWait();

@@ -5,12 +5,14 @@ import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 public class App extends Application {
 
     private View view;
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         view = new View();
         HBox root = view.initView();
         // v - width, v1 - height
@@ -19,7 +21,7 @@ public class App extends Application {
         stage.setTitle("Planning app");
         stage.setScene(scene);
         stage.show();
-        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles.css")).toExternalForm());
     }
 
     public static void main(String[] args) {

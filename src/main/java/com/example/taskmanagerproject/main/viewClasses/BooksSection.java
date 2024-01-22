@@ -218,7 +218,7 @@ public class BooksSection {
 
         Scene optionsScene = new Scene(boxForBoxes, 260, 215);
 
-        optionsScene.getStylesheets().add(App.class.getResource("styles.css").toExternalForm());
+        optionsScene.getStylesheets().add(Objects.requireNonNull(App.class.getResource("styles.css")).toExternalForm());
 
         optionsStage.setScene(optionsScene);
         optionsStage.showAndWait();
@@ -307,7 +307,7 @@ public class BooksSection {
         boxForButton.getChildren().add(addBookButton);
         boxForBoxes.getChildren().addAll(boxForWords, boxForTextFields, boxForButton);
         Scene optionsScene = new Scene(boxForBoxes, 370, 230);
-        optionsScene.getStylesheets().add(App.class.getResource("styles.css").toExternalForm());
+        optionsScene.getStylesheets().add(Objects.requireNonNull(App.class.getResource("styles.css")).toExternalForm());
         optionsStage.setScene(optionsScene);
         optionsStage.showAndWait();
     }
@@ -392,7 +392,7 @@ public class BooksSection {
         boxForButton.getChildren().add(confirmButton);
         boxForBoxes.getChildren().addAll(boxForWords, boxForTextFields, boxForButton);
         Scene optionsScene = new Scene(boxForBoxes, 370, 230);
-        optionsScene.getStylesheets().add(App.class.getResource("styles.css").toExternalForm());
+        optionsScene.getStylesheets().add(Objects.requireNonNull(App.class.getResource("styles.css")).toExternalForm());
         optionsStage.setScene(optionsScene);
         optionsStage.showAndWait();
     }
@@ -506,7 +506,7 @@ public class BooksSection {
         boxForBoxes.getChildren().addAll(labelForOldName, fieldForEnterOldName,
                 confirmButtonForOldName, labelForNewName, fieldForEnterNewName, confirmButtonForNewName);
         Scene optionsScene = new Scene(boxForBoxes, 370, 400);
-        optionsScene.getStylesheets().add(App.class.getResource("styles.css").toExternalForm());
+        optionsScene.getStylesheets().add(Objects.requireNonNull(App.class.getResource("styles.css")).toExternalForm());
         optionsStage.setScene(optionsScene);
         optionsStage.showAndWait();
 

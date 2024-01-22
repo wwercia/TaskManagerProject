@@ -131,7 +131,7 @@ public class TasksSection {
     // this is supposed to set graphics when button is clicked
     private void updateButtonColorWithImage(Button button, boolean isDone) {
         if (isDone) {
-            Image image = new Image(App.class.getResourceAsStream("doneSymbol.png"));
+            Image image = new Image(Objects.requireNonNull(App.class.getResourceAsStream("doneSymbol.png")));
             // Create an ImageView with the loaded image
             ImageView imageView = new ImageView(image);
             // Set the size of the ImageView
@@ -219,7 +219,7 @@ public class TasksSection {
         boxForButton.getChildren().add(addTaskButton);
         boxForBoxes.getChildren().addAll(boxForWords, boxForTextFields, boxForButton);
         Scene optionsScene = new Scene(boxForBoxes, 400, 240);
-        optionsScene.getStylesheets().add(App.class.getResource("styles.css").toExternalForm());
+        optionsScene.getStylesheets().add(Objects.requireNonNull(App.class.getResource("styles.css")).toExternalForm());
         optionsStage.setScene(optionsScene);
         optionsStage.showAndWait();
 
@@ -305,7 +305,7 @@ public class TasksSection {
 
         Scene optionsScene = new Scene(boxForBoxes, 300, 200);
 
-        optionsScene.getStylesheets().add(App.class.getResource("styles.css").toExternalForm());
+        optionsScene.getStylesheets().add(Objects.requireNonNull(App.class.getResource("styles.css")).toExternalForm());
 
         optionsStage.setScene(optionsScene);
         optionsStage.showAndWait();
@@ -379,7 +379,7 @@ public class TasksSection {
 
         Scene optionsScene = new Scene(boxForBoxes, 500, 200);
 
-        optionsScene.getStylesheets().add(App.class.getResource("styles.css").toExternalForm());
+        optionsScene.getStylesheets().add(Objects.requireNonNull(App.class.getResource("styles.css")).toExternalForm());
 
         optionsStage.setScene(optionsScene);
         optionsStage.showAndWait();
@@ -434,7 +434,7 @@ public class TasksSection {
 
         Scene optionsScene2 = new Scene(boxForBoxes2, 380, 220);
 
-        optionsScene2.getStylesheets().add(App.class.getResource("styles.css").toExternalForm());
+        optionsScene2.getStylesheets().add(Objects.requireNonNull(App.class.getResource("styles.css")).toExternalForm());
 
         optionsStage2.setScene(optionsScene2);
         optionsStage2.showAndWait();
@@ -546,7 +546,7 @@ public class TasksSection {
         boxForButton.getChildren().add(confirmbutton);
         boxForBoxes.getChildren().addAll(boxForWords, boxForButtons, boxForTaskNumber, boxForButton);
         Scene optionsScene = new Scene(boxForBoxes, 350, 390);
-        optionsScene.getStylesheets().add(App.class.getResource("styles.css").toExternalForm());
+        optionsScene.getStylesheets().add(Objects.requireNonNull(App.class.getResource("styles.css")).toExternalForm());
         optionsStage.setScene(optionsScene);
         optionsStage.showAndWait();
     }
