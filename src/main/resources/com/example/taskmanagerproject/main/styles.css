@@ -66,8 +66,6 @@
 
 
 .today-button-with-event {
-    /* -fx-background-color: linear-gradient(to right, #92D2FE 80%, #65BFFB 20%); */
-    /*-fx-background-color: linear-gradient(to bottom, #19A1FB 10%, #65BFFB 80%); */
     -fx-background-color: linear-gradient(to bottom, #19A1FB 20%, #71C6FE 80%);
     -fx-text-fill: black;
     -fx-font-size: 14px;
@@ -76,7 +74,6 @@
 }
 
 .button-with-event {
-    /* -fx-background-color: linear-gradient(to right, #92D2FE 80%, #65BFFB 20%); */
     -fx-background-color: linear-gradient(to bottom, #65BFFB 10%, #92D2FE 80%);
     -fx-text-fill: black;
     -fx-font-size: 14px;
@@ -84,7 +81,6 @@
     -fx-background-radius: 5px;
 }
 .today-button-without-event {
-    /* -fx-background-color: linear-gradient(to right, #92D2FE 80%, #65BFFB 20%); */
     -fx-background-color: #62BFFF;
     -fx-text-fill: black;
     -fx-font-size: 14px;
@@ -92,13 +88,13 @@
     -fx-background-radius: 5px;
 }
 .button-without-event {
-    /* -fx-background-color: linear-gradient(to right, #92D2FE 80%, #65BFFB 20%); */
     -fx-background-color: #92D2FE;
     -fx-text-fill: black;
     -fx-font-size: 14px;
     -fx-padding: 10px 20px;
     -fx-background-radius: 5px;
 }
+
 .task_button {
     -fx-background-color: #e2efef;
 }
@@ -152,6 +148,7 @@
 }
 
 
+/* books section styles */
 
 .book_section_main_words {
     -fx-font-family: Pacifico;

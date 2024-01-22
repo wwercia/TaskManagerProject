@@ -365,7 +365,7 @@ public class BooksSection {
             booksToRead.remove(bookToDelete);
             booksRead.remove(bookToDelete);
 
-            // usuwa z ekranu jesli książka jest w przeczytanych książkach
+            // usuwa z ekranu jeśli książka jest w przeczytanych książkach
             HBox boxToDelete = null;
             for (Map.Entry<Label, HBox> entry : readBooks.entrySet()) {
                 if (entry.getKey().getText().equals(bookToDelete.getName())) {
@@ -378,7 +378,7 @@ public class BooksSection {
                 return;
             }
 
-            // usuwa z ekranu jesli książka jest w nieprzeczytanych książkach
+            // usuwa z ekranu jeśli książka jest w nieprzeczytanych książkach
             HBox boxToDeletee = null;
             for (Map.Entry<Button, Label> entry : booksToReadMap.entrySet()) {
                 if (entry.getValue().getText().equals(bookToDelete.getName())) {
@@ -462,7 +462,7 @@ public class BooksSection {
 
             // jakoś musisz zrobić że zmienia sie nazwa w aplikacji na ekranie
 
-            // zmienia nazwe na keranie jesli jest w przeczytanych
+            // zmienia nazwe na ekranie jeśli jest w przeczytanych
             Label labelToChange = null;
             for (Map.Entry<Label, HBox> entry : readBooks.entrySet()) {
                 if (entry.getKey().getText().equals(bookToEdit.getName())) {
@@ -480,7 +480,7 @@ public class BooksSection {
                 return;
             }
 
-            // usuwa z ekranu jesli książka jest w nieprzeczytanych książkach
+            // usuwa z ekranu jeśli książka jest w nieprzeczytanych książkach
             Label labelTochange2 = null;
             for (Map.Entry<Button, Label> entry : booksToReadMap.entrySet()) {
                 if (entry.getValue().getText().equals(bookToEdit.getName())) {
