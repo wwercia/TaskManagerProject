@@ -56,12 +56,15 @@ public class ExpenseDao {
         }
     }
 
-    public void addMoney() {
-
-    }
-
     public boolean updateExpense(Expense expense) {
-        return false;
+        final String sql = String.format("UPDATE `months`.`expenses` SET `date` = '%s', `amount` = '%d', `plus_or_minus` = '%s', `description` = '%s' WHERE (`id` = '%d');",
+                expense.getDate(), expense.getAmount(), expense.getPlusOrMinus(), expense.getDescription(), expense.getId());
+        try (Statement statement = connection.createStatement()) {
+            int updatedRows = statement.executeUpdate(sql);
+            return updatedRows != 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
