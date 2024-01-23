@@ -257,14 +257,14 @@ public class TasksSection {
 
         deleteTaskButton.setOnAction(actionEvent -> {
             String taskk = taskField.getText();
-            int task = 100;
-            if (taskk.length() > 0) {
+            int task;
+            try{
                 task = Integer.parseInt(taskk);
-            }
-            if(task == 100){
-                optionsStage.close();
+            }catch (NumberFormatException e){
+                System.out.println(e);
                 return;
             }
+
             Task taskToDelete = null;
             for (int i = 0; i < listOfTasksInOrder.size(); i++) {
                 if (i == task - 1) {

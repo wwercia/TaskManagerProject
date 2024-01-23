@@ -194,3 +194,8 @@
      -fx-text-fill: lightgrey;
      -fx-font-size: 14px;
  }
+ .enter_data {
+     -fx-font-family: Pacifico;
+     -fx-text-fill: lightgrey;
+     -fx-font-size: 21px;
+ }

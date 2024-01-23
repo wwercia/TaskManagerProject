@@ -5,14 +5,14 @@ public class Expense {
     private String date;
     private Integer amount;
     private String plusOrMinus;
-    private String spentOrGetFrom;
+    private String description;
 
 
     public Expense(String date, Integer amount, String plusOrMinus, String spentOn) {
         this.date = date;
         this.amount = amount;
         this.plusOrMinus = plusOrMinus;
-        this.spentOrGetFrom = spentOn;
+        this.description = spentOn;
     }
 
     public Expense(Integer id, String date, Integer amount, String plusOrMinus, String spentOn) {
@@ -52,12 +52,12 @@ public class Expense {
         this.plusOrMinus = plusOrMinus;
     }
 
-    public String getSpentOrGetFrom() {
-        return spentOrGetFrom;
+    public String getDescription() {
+        return description;
     }
 
-    public void setSpentOrGetFrom(String spentOrGetFrom) {
-        this.spentOrGetFrom = spentOrGetFrom;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 }

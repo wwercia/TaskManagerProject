@@ -33,8 +33,8 @@ public class ExpenseDao {
                 String date = resultSet.getString("date");
                 Integer amount = resultSet.getInt("amount");
                 String plusOrMinus = resultSet.getString("plus_or_minus");
-                String spentOrGetFrom = resultSet.getString("spent_on_or_get_from");
-                data.add(new Expense(id, date, amount, plusOrMinus, spentOrGetFrom));
+                String description = resultSet.getString("description");
+                data.add(new Expense(id, date, amount, plusOrMinus, description));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -43,15 +43,25 @@ public class ExpenseDao {
     }
 
     public void addExpense(Expense expense) {
-
+        final String sql = String.format("INSERT INTO `months`.`expenses` (`date`, `amount`, `plus_or_minus`, `description`) VALUES ('%s', '%d', '%s', '%s');",
+                expense.getDate(), expense.getAmount(), expense.getPlusOrMinus(), expense.getDescription());
+        try (Statement statement = connection.createStatement()) {
+            statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+            ResultSet generatedKeys = statement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                expense.setId(generatedKeys.getInt(1));
+            }
+        } catch (SQLException e) {
+            System.out.println("Something went wrong with the query: " + sql);
+        }
     }
 
     public void addMoney() {
 
     }
 
-    public void updateExpense(Expense expense) {
-
+    public boolean updateExpense(Expense expense) {
+        return false;
     }
 
 }
