@@ -412,6 +412,7 @@ public class BooksSection {
         labelForOldName.getStyleClass().add("book_section_enter_opinion");
         labelForOldName.setStyle("-fx-font-family: 'Pacifico';");
 
+        HBox boxForTextFieldOldName = new HBox();
         TextField fieldForEnterOldName = new TextField();
         fieldForEnterOldName.setPrefHeight(100);
         fieldForEnterOldName.setPrefWidth(300);
@@ -422,6 +423,7 @@ public class BooksSection {
         labelForNewName.getStyleClass().add("book_section_enter_opinion");
         labelForNewName.setStyle("-fx-font-family: 'Pacifico';");
 
+        HBox boxForTextFieldNewName = new HBox();
         TextField fieldForEnterNewName = new TextField();
         fieldForEnterNewName.setPrefHeight(100);
         fieldForEnterNewName.setPrefWidth(300);
@@ -502,10 +504,15 @@ public class BooksSection {
 
         });
 
+        boxForTextFieldOldName.setAlignment(Pos.CENTER);
+        boxForTextFieldNewName.setAlignment(Pos.CENTER);
+        boxForTextFieldOldName.getChildren().add(fieldForEnterOldName);
+        boxForTextFieldNewName.getChildren().add(fieldForEnterNewName);
+
         boxForBoxes.setAlignment(Pos.CENTER);
-        boxForBoxes.getChildren().addAll(labelForOldName, fieldForEnterOldName,
-                confirmButtonForOldName, labelForNewName, fieldForEnterNewName, confirmButtonForNewName);
-        Scene optionsScene = new Scene(boxForBoxes, 370, 400);
+        boxForBoxes.getChildren().addAll(labelForOldName, boxForTextFieldOldName,
+                confirmButtonForOldName, labelForNewName, boxForTextFieldNewName, confirmButtonForNewName);
+        Scene optionsScene = new Scene(boxForBoxes, 370, 465);
         optionsScene.getStylesheets().add(Objects.requireNonNull(App.class.getResource("styles.css")).toExternalForm());
         optionsStage.setScene(optionsScene);
         optionsStage.showAndWait();

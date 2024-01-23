@@ -177,3 +177,20 @@
     -fx-text-fill: lightgrey;
     -fx-font-size: 21px;
 }
+
+
+/* Expenses section */
+
+.add_money {
+     -fx-text-fill: #B4E3FF;
+     -fx-font-size: 13px;
+ }
+.spend_money {
+      -fx-text-fill: #FFB4B4;
+      -fx-font-size: 13px;
+}
+.left_money {
+     -fx-font-family: 'Palatino Linotype Italic';
+     -fx-text-fill: lightgrey;
+     -fx-font-size: 14px;
+ }

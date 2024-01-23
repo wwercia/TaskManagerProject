@@ -1,9 +1,6 @@
 package com.example.taskmanagerproject.main;
 
-import com.example.taskmanagerproject.main.viewClasses.BooksSection;
-import com.example.taskmanagerproject.main.viewClasses.CalendarSection;
-import com.example.taskmanagerproject.main.viewClasses.ExpensesSection;
-import com.example.taskmanagerproject.main.viewClasses.TasksSection;
+import com.example.taskmanagerproject.main.viewClasses.*;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
@@ -38,7 +35,7 @@ public class View {
 
         ExpensesSection expensesSection = new ExpensesSection();
         expensesSection.initExpensesSection();
-        VBox boxForExpensesSection = expensesSection.getBoxForExpensesSection();
+        HBox boxForExpensesSection = expensesSection.getBoxForExpensesSection();
 
         BooksSection booksSection = new BooksSection();
         booksSection.initBooksSection();

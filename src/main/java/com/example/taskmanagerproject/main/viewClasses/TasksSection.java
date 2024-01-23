@@ -52,7 +52,8 @@ public class TasksSection {
 
         Calendar calendar = Calendar.getInstance();
         int daynumber = calendar.get(Calendar.DAY_OF_MONTH);
-
+        System.out.println("in task section");
+        System.out.println(daynumber != todayDao.getLastDay().getDay());
         if (daynumber != todayDao.getLastDay().getDay()) {
             for (Task task : taskDao.getEverything()) {
                 task.setDone(false);
