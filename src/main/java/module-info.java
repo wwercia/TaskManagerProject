@@ -5,5 +5,5 @@ module com.example.taskmanagerproject.main {
 
 
     opens com.example.taskmanagerproject.main to javafx.fxml;
-    exports com.example.taskmanagerproject.main;
+    exports com.example.taskmanagerproject.main.mainn;
 }

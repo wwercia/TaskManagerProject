@@ -220,7 +220,8 @@ public class TasksSection {
         boxForButton.getChildren().add(addTaskButton);
         boxForBoxes.getChildren().addAll(boxForWords, boxForTextFields, boxForButton);
         Scene optionsScene = new Scene(boxForBoxes, 400, 240);
-        optionsScene.getStylesheets().add(Objects.requireNonNull(App.class.getResource("styles.css")).toExternalForm());
+        //optionsScene.getStylesheets().add(Objects.requireNonNull(App.class.getResource("styles.css")).toExternalForm());
+        optionsScene.getStylesheets().add("file:/C:/Users/wwerc/IdeaProjects/TaskManagerProject/src/main/resources/com/example/taskmanagerproject/main/styles.css");
         optionsStage.setScene(optionsScene);
         optionsStage.showAndWait();
 
@@ -306,8 +307,8 @@ public class TasksSection {
 
         Scene optionsScene = new Scene(boxForBoxes, 300, 200);
 
-        optionsScene.getStylesheets().add(Objects.requireNonNull(App.class.getResource("styles.css")).toExternalForm());
-
+        //optionsScene.getStylesheets().add(Objects.requireNonNull(App.class.getResource("styles.css")).toExternalForm());
+        optionsScene.getStylesheets().add("file:/C:/Users/wwerc/IdeaProjects/TaskManagerProject/src/main/resources/com/example/taskmanagerproject/main/styles.css");
         optionsStage.setScene(optionsScene);
         optionsStage.showAndWait();
     }
@@ -380,8 +381,8 @@ public class TasksSection {
 
         Scene optionsScene = new Scene(boxForBoxes, 500, 200);
 
-        optionsScene.getStylesheets().add(Objects.requireNonNull(App.class.getResource("styles.css")).toExternalForm());
-
+        //optionsScene.getStylesheets().add(Objects.requireNonNull(App.class.getResource("styles.css")).toExternalForm());
+        optionsScene.getStylesheets().add("file:/C:/Users/wwerc/IdeaProjects/TaskManagerProject/src/main/resources/com/example/taskmanagerproject/main/styles.css");
         optionsStage.setScene(optionsScene);
         optionsStage.showAndWait();
 
@@ -435,8 +436,8 @@ public class TasksSection {
 
         Scene optionsScene2 = new Scene(boxForBoxes2, 380, 220);
 
-        optionsScene2.getStylesheets().add(Objects.requireNonNull(App.class.getResource("styles.css")).toExternalForm());
-
+        //optionsScene2.getStylesheets().add(Objects.requireNonNull(App.class.getResource("styles.css")).toExternalForm());
+        optionsScene2.getStylesheets().add("file:/C:/Users/wwerc/IdeaProjects/TaskManagerProject/src/main/resources/com/example/taskmanagerproject/main/styles.css");
         optionsStage2.setScene(optionsScene2);
         optionsStage2.showAndWait();
     }
@@ -547,7 +548,8 @@ public class TasksSection {
         boxForButton.getChildren().add(confirmbutton);
         boxForBoxes.getChildren().addAll(boxForWords, boxForButtons, boxForTaskNumber, boxForButton);
         Scene optionsScene = new Scene(boxForBoxes, 350, 390);
-        optionsScene.getStylesheets().add(Objects.requireNonNull(App.class.getResource("styles.css")).toExternalForm());
+        //optionsScene.getStylesheets().add(Objects.requireNonNull(App.class.getResource("styles.css")).toExternalForm());
+        optionsScene.getStylesheets().add("file:/C:/Users/wwerc/IdeaProjects/TaskManagerProject/src/main/resources/com/example/taskmanagerproject/main/styles.css");
         optionsStage.setScene(optionsScene);
         optionsStage.showAndWait();
     }

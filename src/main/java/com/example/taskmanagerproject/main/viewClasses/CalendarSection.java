@@ -404,8 +404,8 @@ public class CalendarSection {
 
         Scene optionsScene = new Scene(boxForBoxes, 500, 240);
 
-        optionsScene.getStylesheets().add(Objects.requireNonNull(App.class.getResource("styles.css")).toExternalForm());
-
+        //optionsScene.getStylesheets().add(Objects.requireNonNull(App.class.getResource("styles.css")).toExternalForm());
+        optionsScene.getStylesheets().add("file:/C:/Users/wwerc/IdeaProjects/TaskManagerProject/src/main/resources/com/example/taskmanagerproject/main/styles.css");
         optionsStage.setScene(optionsScene);
         optionsStage.showAndWait();
     }
@@ -504,8 +504,8 @@ public class CalendarSection {
 
         Scene optionsScene = new Scene(boxForBoxes, 500, 240);
 
-        optionsScene.getStylesheets().add(Objects.requireNonNull(App.class.getResource("styles.css")).toExternalForm());
-
+        //optionsScene.getStylesheets().add(Objects.requireNonNull(App.class.getResource("styles.css")).toExternalForm());
+        optionsScene.getStylesheets().add("file:/C:/Users/wwerc/IdeaProjects/TaskManagerProject/src/main/resources/com/example/taskmanagerproject/main/styles.css");
         optionsStage.setScene(optionsScene);
         optionsStage.showAndWait();
     }

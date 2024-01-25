@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Main-Class: com.example.taskmanagerproject.main.Launcher
+Class-Path: protobuf-java-3.21.9.jar javafx-base-19-ea+7-win.jar javafx-
+ fxml-19-ea+7.jar javafx-fxml-19-ea+7-win.jar javafx-graphics-19-ea+7-wi
+ n.jar mysql-connector-j-8.0.33.jar javafx-base-19-ea+7.jar javafx-graph
+ ics-19-ea+7.jar javafx-controls-19-ea+7-win.jar javafx-controls-19-ea+7
+ .jar
+
