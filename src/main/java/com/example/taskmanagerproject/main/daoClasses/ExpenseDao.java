@@ -67,4 +67,14 @@ public class ExpenseDao {
         }
     }
 
+    public boolean deleteExpense(Expense expense){
+        final String sql = "DELETE FROM `months`.`expenses` WHERE (`id` = '" + expense.getId() + "');";
+        try (Statement statement = connection.createStatement()) {
+            int updatedRows = statement.executeUpdate(sql);
+            return updatedRows != 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
